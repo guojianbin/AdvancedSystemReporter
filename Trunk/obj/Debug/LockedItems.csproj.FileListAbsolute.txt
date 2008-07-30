@@ -1,5 +1,0 @@
-C:\Inetpub\wwwroot\NiCam v.R\WebSite\bin\LockedItems.dll
-C:\Inetpub\wwwroot\NiCam v.R\WebSite\bin\LockedItems.pdb
-C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\LockedItems\obj\Debug\ResolveAssemblyReference.cache
-C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\LockedItems\obj\Debug\LockedItems.dll
-C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\LockedItems\obj\Debug\LockedItems.pdb
