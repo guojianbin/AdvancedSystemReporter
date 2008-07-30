@@ -1,0 +1,5 @@
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\LockedItems\bin\Release\LockedItems.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\LockedItems\bin\Release\LockedItems.pdb
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\LockedItems\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\LockedItems\obj\Release\LockedItems.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\LockedItems\obj\Release\LockedItems.pdb

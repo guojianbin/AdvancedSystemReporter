@@ -1,0 +1,23 @@
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\MyItems\ItemFilter\bin\Debug\ItemFilter.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\MyItems\ItemFilter\bin\Debug\ItemFilter.pdb
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\MyItems\ItemFilter\bin\Debug\Sitecore.Kernel.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\MyItems\ItemFilter\bin\Debug\Sitecore.Logging.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\MyItems\ItemFilter\bin\Debug\Interop.Shell32.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\MyItems\ItemFilter\bin\Debug\HtmlAgilityPack.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\MyItems\ItemFilter\bin\Debug\Newtonsoft.Json.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\MyItems\ItemFilter\bin\Debug\ComponentArt.Web.UI.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\MyItems\ItemFilter\bin\Debug\RadSpell.Net2.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\MyItems\ItemFilter\bin\Debug\Sitecore.NVelocity.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\MyItems\ItemFilter\bin\Debug\Sitecore.Zip.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\MyItems\ItemFilter\bin\Debug\RadEditor.Net2.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\MyItems\ItemFilter\bin\Debug\Lucene.Net.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\MyItems\ItemFilter\bin\Debug\Mvp.Xml.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\MyItems\ItemFilter\bin\Debug\Sitecore.Kernel.xml
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\MyItems\ItemFilter\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\MyItems\ItemFilter\obj\Debug\ItemFilter.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\MyItems\ItemFilter\obj\Debug\ItemFilter.pdb
+C:\Inetpub\wwwroot\NiCam v.R\WebSite\bin\ItemFilter.dll
+C:\Inetpub\wwwroot\NiCam v.R\WebSite\bin\ItemFilter.pdb
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\ItemFilter\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\ItemFilter\obj\Debug\ItemFilter.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\ItemFilter\obj\Debug\ItemFilter.pdb

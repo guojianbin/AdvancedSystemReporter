@@ -1,0 +1,8 @@
+C:\Inetpub\wwwroot\NiCam v.R\WebSite\bin\ASR.dll
+C:\Inetpub\wwwroot\NiCam v.R\WebSite\bin\ASR.pdb
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\LockedItems\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\LockedItems\obj\Debug\ASR.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\LockedItems\obj\Debug\ASR.pdb
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\ASR\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\ASR\obj\Debug\ASR.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\ASR\obj\Debug\ASR.pdb

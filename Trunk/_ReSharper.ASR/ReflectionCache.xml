@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Assemblies Version="1073741833">
+  <Assembly Name="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Image="49dceafe-ab21-405f-b4b6-84b5b99cf5c1" Timestamp="633300517580000000" XmlDocIndexTimestamp="633264999640000000" />
+  <Assembly Name="System.Xml.Linq, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Image="40d8d398-5a8b-47ab-be6a-dc2cce639a58" Timestamp="633300517580000000" XmlDocIndexTimestamp="633258097180000000" />
+  <Assembly Name="System.Data.DataSetExtensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Image="ad4addea-74f5-4f33-b021-0673fe7451f5" Timestamp="633300517580000000" XmlDocIndexTimestamp="633264999640000000" />
+  <Assembly Name="JetBrains.Annotations, Version=4.0.819.19, Culture=neutral, PublicKeyToken=1010a0d8d6380325" Image="db0a208a-ef25-4083-b92f-6d4f087a2bf7" Timestamp="633486383860000000" XmlDocIndexTimestamp="633486383860000000" />
+  <Assembly Name="Sitecore.Kernel, Version=6.0.0.0, Culture=neutral, PublicKeyToken=null" Image="9cab68b5-cc9b-4757-92db-5bfe3623963c" Timestamp="633462620700000000" />
+  <Assembly Name="Sitecore.Client, Version=6.0.0.0, Culture=neutral, PublicKeyToken=null" Image="f139a885-a16a-47a1-b3ea-b7ee4c57b146" Timestamp="633462621560000000" />
+  <Assembly Name="CorePoint.DomainObjects, Version=1.0.3114.18076, Culture=neutral, PublicKeyToken=null" Image="71d7aadc-034d-462b-98c1-72bc8e539447" Timestamp="633519633502157540" XmlDocIndexTimestamp="633516342587396435" />
+</Assemblies>
