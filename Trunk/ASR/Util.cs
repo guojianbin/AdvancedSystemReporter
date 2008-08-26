@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Sitecore.Web.UI.Sheer;
-using Sitecore.Data.Items;
-using Sitecore.Data;
 using Sitecore.Text;
+using Sitecore.Web.UI.Sheer;
 
 namespace ASR
 {
-    class Utils
-    { 
-
+    class Util
+    {
         public static void ShowItemBrowser(string header, string text, string icon, string button, Sitecore.Data.ID root, Sitecore.Data.ID selected, string database)
         {
             //string str = selected;

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CorePoint.DomainObjects;
-namespace ASR
+namespace ASR.App
 {
     [Template("system/item reporter/filter")]
-    class FilterItem:ReferenceItem
+    public class FilterItem:ReferenceItem
     {
 
     }

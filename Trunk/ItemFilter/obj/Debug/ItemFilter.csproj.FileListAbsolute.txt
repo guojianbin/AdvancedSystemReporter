@@ -21,3 +21,5 @@ C:\Inetpub\wwwroot\NiCam v.R\WebSite\bin\ItemFilter.pdb
 C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\ItemFilter\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\ItemFilter\obj\Debug\ItemFilter.dll
 C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\ItemFilter\obj\Debug\ItemFilter.pdb
+C:\Inetpub\wwwroot\Sitecore 6.0.0 rev. 080627\WebSite\bin\ItemFilter.dll
+C:\Inetpub\wwwroot\Sitecore 6.0.0 rev. 080627\WebSite\bin\ItemFilter.pdb

@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\..\Inetpub\wwwroot\NiCam v.R\WebSite\bin\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\Inetpub\wwwroot\Sitecore 6.0.0 rev. 080627\Website\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -47,7 +47,9 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -58,20 +60,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandItem.cs" />
-    <Compile Include="FilterItem.cs" />
-    <Compile Include="ReportItem.cs" />
-    <Compile Include="ICommand.cs" />
-    <Compile Include="IFilter.cs" />
-    <Compile Include="IScanner.cs" />
-    <Compile Include="ItemScanner.cs" />
-    <Compile Include="ASR.cs">
+    <Compile Include="ReportRunner.cs" />
+    <Compile Include="Scanners\Items.cs" />
+    <Compile Include="Scanners\Languages.cs" />
+    <Compile Include="Scanners\Versions.cs" />
+    <Compile Include="Util.cs" />
+    <Compile Include="DomainObjects\ASRproperties.cs" />
+    <Compile Include="DomainObjects\CommandItem.cs" />
+    <Compile Include="DomainObjects\FieldItem.cs" />
+    <Compile Include="DomainObjects\FilterItem.cs" />
+    <Compile Include="DomainObjects\ReportItem.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Filters\IFilter.cs" />
+    <Compile Include="Scanners\IScanner.cs" />
+    <Compile Include="Scanners\Publishable.cs" />
+    <Compile Include="View\ASR.cs">
     </Compile>
-    <Compile Include="MyInsertRule.cs" />
-    <Compile Include="PresetFilters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReferenceItem.cs" />
-    <Compile Include="Utils.cs" />
+    <Compile Include="DomainObjects\ReferenceItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ASR.xml" />

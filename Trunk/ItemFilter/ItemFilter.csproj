@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\..\..\Inetpub\wwwroot\NiCam v.R\WebSite\bin\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\Inetpub\wwwroot\Sitecore 6.0.0 rev. 080627\WebSite\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -36,6 +36,7 @@
       <HintPath>..\..\..\..\..\..\..\Inetpub\wwwroot\NiCam v.R\WebSite\bin\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -49,8 +50,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command.cs" />
-    <Compile Include="Filter.cs" />
+    <Compile Include="Commands\CheckIn.cs" />
+    <Compile Include="Commands\RemoveVersions.cs" />
+    <Compile Include="Filters\BasedOnTemplate.cs" />
+    <Compile Include="Filters\CreatedBy.cs" />
+    <Compile Include="Filters\CreatedByMe.cs" />
+    <Compile Include="Filters\CreatedLastXDays.cs" />
+    <Compile Include="Filters\DifferentInDatabase.cs" />
+    <Compile Include="Filters\Locked.cs" />
+    <Compile Include="Filters\ExistsInDatabase.cs" />
+    <Compile Include="Filters\ManyChildren.cs" />
+    <Compile Include="Filters\ManyVersions.cs" />
+    <Compile Include="Filters\ValidationError.cs" />
+    <Compile Include="MyLockField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

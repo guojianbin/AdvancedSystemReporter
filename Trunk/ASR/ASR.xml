@@ -1,30 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <!--=============================================================
-    File: LockedItems.xml                                                   
+    File: ASR.xml                                                   
     Created by: sitecore\admin                                       
     Created: 04/07/2008 15:01:03                                               
 ==============================================================-->
 
 <control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense">
-  <LockedItems>
+  <ASR>
     <FormPage Height="250px">
 
-      <CodeBeside Type="ASR.ASR,ASR"/>
+      <CodeBeside Type="ASR.App.MainForm,ASR"/>
 
-      <GridPanel class="scBackground" vAlign="top" Height="100%" Width="100%" Cellpadding="0">
+      <GridPanel class="scBackground" ID="MainPanel" vAlign="top" Height="100%" Width="100%" Cellpadding="0">
 
         <Toolbar ID="MyToolbar">
-            <Toolbutton ID="ExecuteFilter" visible="false"/>
+          <Toolbutton ID="ExecuteFilter" visible="false"/>
 
-            <Toolbutton ID="CommandButton" visible ="false"/>
-            <Toolbutton ID="CommandAllButton" visible ="false"/>
-            <Tooldivider />
-           
-            <Toolbutton ID="SourceItem" Header="Select Source" Icon="Database/32x32/view_h.png"/>
-            <Tooldivider />
-            <Toolbutton ID="ReportButton" Header="Select Report" Icon="Software/32x32/branch_element.png"/>
-          </Toolbar>
+          <Toolbutton ID="CommandButton" visible ="false"/>
+          <Toolbutton ID="CommandAllButton" visible ="false"/>
+          <Tooldivider />
+
+          <Toolbutton ID="SourceItem" Header="Select Root Node" Icon="Software/32x32/branch_element.png" ToolTip="Only children of the root node will be reported"/>
+          <Tooldivider />
+          <Toolbutton ID="ReportButton" Header="Select Report" Icon="Applications/32x32/folder_view.png" ToolTip="The report to use"/>
+          <Tooldivider />
+          <Toolbutton ID="OpenReport" Header="Open Report Configuration" Icon="Applications/32x32/star_yellow_view.png" ToolTip="Open the report configuration item to change the settings"/>
+
+        </Toolbar>
 
 
 
@@ -32,15 +35,9 @@
 
           <Scrollbox Height="100%" Width="100%" Padding="0">
             <Listview ID="ItemList" View="Details" Background="white">
-              <ListviewHeader>
-                <ListviewHeaderItem Name="path" Header="Path" />
-                <ListviewHeaderItem Name="user" Header="User" />
-                <ListviewHeaderItem Name="lang" Header="Language" />
-                <ListviewHeaderItem Name="version" Header="Version" />
-                <ListviewHeaderItem Name="date" Header="Locked" />
-              </ListviewHeader>
+
             </Listview>
-            
+
           </Scrollbox>
 
 
@@ -53,10 +50,11 @@
             <Border Border="1px inset" Padding="2" Height="100%">
               <Literal ID="Status"/>
             </Border>
+
           </GridPanel>
         </Border>
 
       </GridPanel>
     </FormPage>
-  </LockedItems>
+  </ASR>
 </control>

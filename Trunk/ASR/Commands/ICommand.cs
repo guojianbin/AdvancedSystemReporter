@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ASR
+namespace ASR.Commands
 {
     public interface ICommand
     {

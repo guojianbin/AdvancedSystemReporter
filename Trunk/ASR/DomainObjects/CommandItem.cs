@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using CorePoint.DomainObjects.SC;
 using CorePoint.DomainObjects;
+using ASR.App;
 
-namespace ASR
+namespace ASR.App
 {
     [Template("system/item reporter/command")]
-    class CommandItem:ReferenceItem
+    public class CommandItem:ReferenceItem
     {
-        [Field("name")]
-        public string Name
+        [Field("title")]
+        public string Title
         {
             get;
             private set;
