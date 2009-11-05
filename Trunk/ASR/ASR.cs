@@ -17,7 +17,7 @@ namespace ASR.App
 	public class MainForm : Sitecore.Web.UI.Sheer.BaseForm
 	{
 
-		#region Cariables
+		#region Variables
 		protected ASRListview ItemList;
 		protected ListviewHeader LViewHeader;
 
