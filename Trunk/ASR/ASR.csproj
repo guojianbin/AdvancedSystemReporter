@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4E189BA3-7E40-47F8-9552-08558E06A8AA}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -64,6 +64,7 @@
     <Compile Include="Commands\ExportXML.cs" />
     <Compile Include="Commands\Open.cs" />
     <Compile Include="Commands\Refresh.cs" />
+    <Compile Include="Commands\ReportEmailTask.cs" />
     <Compile Include="Commands\Run.cs" />
     <Compile Include="Commands\SetOwner.cs" />
     <Compile Include="Context.cs" />
