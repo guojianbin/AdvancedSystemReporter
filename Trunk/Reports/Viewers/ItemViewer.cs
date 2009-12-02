@@ -16,7 +16,23 @@ namespace ASR.Reports.Items
 	{
 		public static string COLUMNS_PARAMETER = "columns";
 		public static string HEADERS_PARAMETER = "headers";
+        public static string MAX_LENGHT_PARAMETER = "maxlength";
 
+        private int _maxLength = -1;
+        public int MaxLength
+        {
+            get
+            {
+                if (_maxLength < 0)
+                {
+                    if (!int.TryParse(base.getParameter(MAX_LENGHT_PARAMETER), out _maxLength))
+                    {
+                        _maxLength = 100;
+                    }
+                }
+                return _maxLength;
+            }
+        }
 		public override void Display(DisplayElement d_element)
 		{
 			Item itemElement = d_element.Element as Item;
@@ -125,16 +141,15 @@ namespace ASR.Reports.Items
 						return formatDateField(itemElement, field.ID);
 					case "droplink":
 					case "droptree":
+                    case "reference":
+                    case "grouped droplink":
 						LookupField lookupFld = (LookupField)field;
 						if (lookupFld != null && lookupFld.TargetItem != null)
 						{
 							return lookupFld.TargetItem.Name;
 						}
-						break;
+						break;                    
 					case "checklist":
-					case "droplist":
-					case "grouped droplink":
-					case "grouped droplist":
 					case "multilist":
 					case "treelist":
 					case "treelistex":
@@ -146,11 +161,23 @@ namespace ASR.Reports.Items
 							{
 								strBuilder.AppendFormat("{0}, ", item.Name);
 							}
-							return strBuilder.ToString().TrimEnd(',', ' ');
+							return StringUtil.Clip(strBuilder.ToString().TrimEnd(',', ' '),MaxLength,true);
 						}
 						break;
+                    case "general link":
+                        LinkField lf = new LinkField(field);
+                        switch (lf.LinkType)
+                        {
+                            case "media":
+                            case "internal": return lf.TargetItem.Name;
+                            case "anchor":
+                            case "mailto":
+                            case "external": return lf.Url;
+                            default:
+                                return lf.Text;
+                        }
 					default:
-						return field.Value;
+						return StringUtil.Clip(field.Value,MaxLength,true);
 				}
 			}
 			return String.Empty;
