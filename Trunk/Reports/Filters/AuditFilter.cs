@@ -18,7 +18,10 @@ namespace ASR.Reports.Logs
                 return true;
             }
             
-            return (ai.Verb == null || ai.Verb.Contains(Verb)) && (ai.User == null || ai.User.Contains(User));
+            return (string.IsNullOrEmpty(Verb) || ai.Verb == null ||
+                ai.Verb.Equals(Verb,System.StringComparison.InvariantCultureIgnoreCase)) 
+                && (string.IsNullOrEmpty(User) || ai.User == null ||
+                ai.User.Equals(User,System.StringComparison.InvariantCultureIgnoreCase));
 
         }
     }
