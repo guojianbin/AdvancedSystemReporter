@@ -107,12 +107,17 @@ namespace ASR.Reports.Items
 		}
 
 		private void addItem(IEnumerable<Logs.AuditItem> auditItems, ArrayList results, Item item)
-		{
-			results.Add(item);
+		{            
+            ArrayList temp = new ArrayList();
 			foreach (Logs.AuditItem ai in auditItems.Where(a => compareUris(a.ItemUri, item.Uri)))
 			{
-				results.Add(ai);
+				temp.Add(ai);
 			}
+            if (temp.Count > 0)
+            {
+                results.Add(item);
+                results.AddRange(temp);
+            }
 		}
 		private bool compareUris(ItemUri a, ItemUri b)
 		{
