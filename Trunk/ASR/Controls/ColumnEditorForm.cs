@@ -17,7 +17,8 @@ namespace ASR.Controls
 {
 	class ColumnEditorForm : DialogForm
 	{
-		protected Edit ColumnName;
+		protected ASRComboEdit ColumnName;
+        
 		protected Edit ColumnHeader;
 		protected Scrollbox Columns;
 
@@ -44,6 +45,8 @@ namespace ASR.Controls
 			{
 				Refresh();
 				SelectedIndex = -1;
+                ColumnHeader.Value =
+                    Sitecore.Context.Request.QueryString["itemtype"] ?? "<no name>";
 			}
 		}
 
@@ -62,6 +65,7 @@ namespace ASR.Controls
 			SheerResponse.SetOuterHtml("Columns", Columns);
 		}
 
+       
 		private void RenderColumns()
 		{
 			//LayoutDefinition.Parse(WebUtil.GetSessionString("SC_DEVICEEDITOR"));
@@ -203,8 +207,8 @@ namespace ASR.Controls
 				columnNode.InnerText = ColumnHeader.Value;
 				doc.DocumentElement.AppendChild(columnNode);
 
-				ColumnName.Value = String.Empty;
-				ColumnHeader.Value = String.Empty;
+                
+                ColumnHeader.Value = "<no name>";
 
 				WebUtil.SetSessionValue("ASR_COLUMNEDITOR", doc.OuterXml);
 				Refresh();

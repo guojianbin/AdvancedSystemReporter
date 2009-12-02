@@ -136,10 +136,10 @@ namespace ASR.Controls
 					if (value == "__#!$No value$!#__")
 					{
 						value = string.Empty;
-					}
+					}                    
 					handle["value"] = value;
-					handle.Add(urlString);
-					SheerResponse.ShowModalDialog(urlString.ToString(), "800px", "500px", string.Empty, true);
+					handle.Add(urlString);                    
+                    SheerResponse.ShowModalDialog(urlString.ToString(), "800px", "500px", string.Empty, true);
 					args.WaitForPostBack();
 				}
 			}

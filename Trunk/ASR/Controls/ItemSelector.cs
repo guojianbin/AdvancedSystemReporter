@@ -7,9 +7,12 @@ using Sitecore.Web.UI.Sheer;
 using Sitecore.Data.Items;
 using Sitecore.Text;
 using Sitecore;
+using System.Collections.Specialized;
 
 namespace ASR.Controls
 {
+    public enum ItemInfo { ID = 0, Name = 1, FullPath = 2 };
+    
 	public class ItemSelector : Sitecore.Web.UI.HtmlControls.Control
 	{
 		protected Edit e;
@@ -31,6 +34,51 @@ namespace ASR.Controls
 			this.Controls.Add(l);
 			this.Controls.Add(b);
 		}
+
+        public ItemInfo DisplayValueType
+        {
+            get { return (ItemInfo)base.GetViewStateInt("DisplayValueType"); }
+            set
+            {
+                base.SetViewStateInt("DisplayValueType", (int)value);
+            }
+        }
+
+        public ItemInfo ValueType
+        {
+            get { return (ItemInfo)base.GetViewStateInt("ValueType"); }
+            set
+            {
+                base.SetViewStateInt("ValueType", (int)value);
+            }
+        }
+
+        public string Root
+        {
+            get { return base.GetViewStateString("Root"); }
+            set
+            {
+                base.SetViewStateString("Root", value);
+            }
+        }
+
+        public string Folder
+        {
+            get { return base.GetViewStateString("Folder"); }
+            set
+            {
+                base.SetViewStateString("Folder", value);
+            }
+        }
+
+        public string Filter
+        {
+            get { return base.GetViewStateString("Filter"); }
+            set
+            {
+                base.SetViewStateString("Filter", value);
+            }
+        }
 
 		public override string Value
 		{
@@ -67,13 +115,18 @@ namespace ASR.Controls
 		{
 			if (!args.IsPostBack)
 			{
-				ItemSelectorDialog.Show();
-				args.WaitForPostBack();
+                NameValueCollection nvc = new NameValueCollection();
+                if(!string.IsNullOrEmpty(Root)) nvc.Add("ro", Root);
+                if(!string.IsNullOrEmpty(Folder)) nvc.Add("fo", Folder);
+                if(!string.IsNullOrEmpty(Filter)) nvc.Add("flt", Filter);
+				ItemSelectorDialog.Show(nvc);
+                args.WaitForPostBack();
 			}
 			else
 			{
 				if (args.Result != null && args.Result != "undefined")
 				{
+
 					Value = args.Result;
 
 					Sitecore.Context.ClientPage.ClientResponse.Refresh(this.Parent);
@@ -81,19 +134,32 @@ namespace ASR.Controls
 			}
 		}
 
+        protected virtual string TransformResult(string p, ItemInfo info)
+        {
+            Item item = Sitecore.Context.ContentDatabase.GetItem(p);
+            if (item != null)
+            {
+                switch (info)
+                {
+                    case ItemInfo.Name:
+                        return item.Name;
+                    case ItemInfo.FullPath:
+                        return item.Paths.FullPath;
+                    case ItemInfo.ID:
+                        return item.ID.ToString();
+                }
+            }
+            return p;
+        }
+
 		protected virtual string ResultDisplay(string p)
 		{
-			Item item = Sitecore.Context.ContentDatabase.GetItem(p);
-			if (item != null)
-			{
-				return item.Paths.FullPath;
-			}
-			return p;
+            return TransformResult(p, DisplayValueType);
 		}
 
 		protected virtual string ResultValue(string p)
 		{
-			return p;
+            return TransformResult(p, ValueType);
 		}
 	}
 }

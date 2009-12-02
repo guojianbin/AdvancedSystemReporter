@@ -23,6 +23,7 @@ namespace ASR.Controls
 		{
 
 		}
+       
 
 		/// <summary>
 		/// Executes the click event.
@@ -35,13 +36,33 @@ namespace ASR.Controls
 			if (source.StartsWith("SortBy"))
 			{
 				string columnIndex = source.Substring(source.IndexOf("_") + 1);
-				this.SortByColumn(MainUtil.GetInt(columnIndex, 0));
+                int colindex = MainUtil.GetInt(columnIndex, 0);
+                if (colindex > 0)
+                {
+                    this.SortByColumn(colindex);
+                }
+                else
+                {
+                    SelectAll();
+                }
+                        
+
 			}
 			else
 			{
 				base.DoClick(message);
 			}
 		}
+
+        private void SelectAll()
+        {
+            foreach (var item in this.Items)
+            {
+                item.Selected = !item.Selected;
+            }
+        }
+
+        
 
 		/// <summary>
 		/// Sorts the by column.

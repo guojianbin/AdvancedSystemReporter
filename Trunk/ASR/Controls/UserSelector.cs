@@ -16,7 +16,8 @@ namespace ASR.Controls
 			{
 				SelectAccountOptions options = new SelectAccountOptions();
 				options.Multiple = false;
-				options.ExcludeRoles = false;
+                options.ExcludeUsers = "roles".Equals(Filter, StringComparison.InvariantCultureIgnoreCase);
+				options.ExcludeRoles = "users".Equals(Filter,StringComparison.InvariantCultureIgnoreCase);
 				options.DomainName = "sitecore";
 				SheerResponse.ShowModalDialog(options.ToUrlString().ToString(), true);
 				args.WaitForPostBack();

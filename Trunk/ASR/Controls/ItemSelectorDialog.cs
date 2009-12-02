@@ -9,6 +9,7 @@ using Sitecore.Configuration;
 using Sitecore.Web.UI.Pages;
 using Sitecore.Text;
 using Sitecore;
+using System.Collections.Specialized;
 
 namespace ASR.Controls
 {
@@ -24,7 +25,16 @@ namespace ASR.Controls
 		{
 			if (!Sitecore.Context.ClientPage.IsEvent)
 			{
+
 				this.DataContext.GetFromQueryString();
+                if (this.DataContext.Root.Length == 0)
+                {
+                    this.DataContext.Root = "{11111111-1111-1111-1111-111111111111}";                    
+                }
+                if (this.DataContext.Filter.Length == 0)
+                {
+                    this.DataContext.Filter = "@@virtual=0";
+                }
 				Item folder = this.DataContext.GetFolder();
 				this.BuildDatabases((folder == null) ? string.Empty : folder.Database.Name);
 			}
@@ -84,9 +94,23 @@ namespace ASR.Controls
 			this.Treeview.RefreshRoot();
 		}
 
-		public static void Show()
+        public static void Show()
+        {
+            Show(null);
+        }
+		public static void Show(NameValueCollection options)
 		{
 			UrlString url = new UrlString(UIUtil.GetUri("control:ItemSelectorDialog"));
+            if (options != null)
+            {
+                
+                foreach (var key in options.AllKeys)
+                {
+                    url.Parameters.Add(
+                        key, System.Web.HttpUtility.UrlEncode(options[key]));
+                       
+                }                               
+            }
 			SheerResponse.ShowModalDialog(url.ToString(), true);
 		}
 	}
