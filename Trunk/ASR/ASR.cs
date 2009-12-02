@@ -36,13 +36,16 @@ namespace ASR.App
 			base.OnLoad(args);
 			if (!Sitecore.Context.ClientPage.IsEvent)
 			{
-				Current.ClearContext();
-				LoadMenuItems();
-				ItemList.View = "Details";
-				ItemList.DblClick = "OnOpen";
+                Current.ClearContext();
+                LoadMenuItems();
+                
+                ItemList.View = "Details";
+                ItemList.DblClick = "OnOpen";
 
 				openReport(Sitecore.Web.WebUtil.GetQueryString());
 
+                
+                
 			}
 		}
 
@@ -357,6 +360,7 @@ namespace ASR.App
 			Panel panel = new Panel();
 			panel.Style.Add("border", "none");
 			panel.Style.Add("margin-bottom", "10px");
+            
 			Literal literal = new Literal();
 			literal.Text = string.Format("<strong>{0}</strong><br/>", referenceItem.Name);
 			panel.ID = Control.GetUniqueID(string.Concat("params_", referenceItem.GetType().Name.ToLower(), "_", referenceItem.Name.ToLower(), "_"));
@@ -365,60 +369,22 @@ namespace ASR.App
 			{
 				Inline i = new Inline();
 				Label l = new Label();
+                
 
 				l.Header = pi.Title + ":";
 				l.Style.Add("font-weight", "bold");
 				l.Style.Add("margin-right", "10px");
 				l.Style.Add("margin-left", "20px");
-				l.Style.Add("width", "85px");
+				l.Style.Add("width", "100px");
 				l.Style.Add("text-align", "right");
+                l.Style.Add("float", "left");
+                
 
-				Control input = null;
-				if (pi.Type == "Text")
-				{
-					input = new Edit();
-					input.ID = Control.GetUniqueID("input");
-				}
-				else if (pi.Type == "Dropdown")
-				{
-					Combobox c = new Combobox();
-					foreach (var value in pi.PossibleValues())
-					{
-						ListItem li = new ListItem();
-						li.Header = value.Name;
-						li.Value = value.Value;
-						c.Controls.Add(li);
-					}
-					input = c;
-					input.ID = Control.GetUniqueID("input");
-				}
-				else if (pi.Type == "Item Selector")
-				{
-					ASR.Controls.ItemSelector iSelect = new ASR.Controls.ItemSelector();
-					input = iSelect;
-					input.ID = Control.GetUniqueID("input");
-					iSelect.Click = string.Concat("itemselector", ":", input.ID);
-				}
-				else if (pi.Type == "User Selector")
-				{
-					ASR.Controls.UserSelector uSelect = new ASR.Controls.UserSelector();
-					input = uSelect;
-					input.ID = Control.GetUniqueID("input");
-					uSelect.Click = string.Concat("itemselector", ":", input.ID);
-				}
-				else if (pi.Type == "Date picker")
-				{
-					DateTimePicker dtPicker = new DateTimePicker();
-					dtPicker.ID = Sitecore.Web.UI.HtmlControls.Control.GetUniqueID("input");
-					dtPicker.ShowTime = false;
-					dtPicker.Click = "datepicker" + ":" + dtPicker.ID;
-					dtPicker.Style.Add(System.Web.UI.HtmlTextWriterStyle.Display, "inline");
-					dtPicker.Style.Add(System.Web.UI.HtmlTextWriterStyle.VerticalAlign, "middle");
-					input = dtPicker;
-				}
+				Control input = pi.MakeControl();
+                l.For = input.ID;
 
-				input.Value = pi.Value;
-
+                i.Style.Add("display", "block");
+                i.Style.Add("margin-top", "5px");
 				i.Value = input.ID;
 				i.ID = Control.GetUniqueID("params_" + pi.Name + "_");
 				i.Controls.Add(l);
