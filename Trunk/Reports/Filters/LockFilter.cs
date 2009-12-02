@@ -51,14 +51,14 @@ namespace ASR.Reports.Items
         {
             if (hours < 0) return true;
 
-            return lockingdate.AddHours(hours).CompareTo(DateTime.Now) > 0;
+            return lockingdate.AddHours(hours).CompareTo(DateTime.Now) < 0;
         }
 
         private bool checkOwner(string ownername, string parameter)
         {
             if (string.IsNullOrEmpty(parameter)) return true;
 
-            return ownername.Contains(parameter);
+            return ownername.Equals(parameter,StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }
