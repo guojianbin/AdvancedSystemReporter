@@ -63,31 +63,32 @@ namespace ASR.Commands
 			Item link = addItem(name, templateid, folder);
 
 
-			NameValueCollection nvc = new NameValueCollection();
-			nvc.Add("id", new ID(Current.Context.ReportItem.Id).ToString());
-			foreach (var item in Current.Context.ReportItem.Scanners)
-			{
-				foreach (var p in item.Parameters)
-				{
-					nvc.Add(string.Concat(item.Name, "^", p.Name), p.Value);
-				}
-			}
-			foreach (var item in Current.Context.ReportItem.Filters)
-			{
-				foreach (var p in item.Parameters)
-				{
-					nvc.Add(string.Concat(item.Name, "^", p.Name), p.Value);
-				}
-			}
-			foreach (var item in Current.Context.ReportItem.Viewers)
-			{
-				foreach (var p in item.Parameters)
-				{
-					nvc.Add(string.Concat(item.Name, "^", p.Name), p.Value);
-				}
-			}
 
-
+            //NameValueCollection nvc = new NameValueCollection();
+            //nvc.Add("id", new ID(Current.Context.ReportItem.Id).ToString());
+            //foreach (var item in Current.Context.ReportItem.Scanners)
+            //{
+            //    foreach (var p in item.Parameters)
+            //    {
+            //        nvc.Add(string.Concat(item.Name, "^", p.Name), p.Value);
+            //    }
+            //}
+            //foreach (var item in Current.Context.ReportItem.Filters)
+            //{
+            //    foreach (var p in item.Parameters)
+            //    {
+            //        nvc.Add(string.Concat(item.Name, "^", p.Name), p.Value);
+            //    }
+            //}
+            //foreach (var item in Current.Context.ReportItem.Viewers)
+            //{
+            //    foreach (var p in item.Parameters)
+            //    {
+            //        nvc.Add(string.Concat(item.Name, "^", p.Name), p.Value);
+            //    }
+            //}
+            
+            
 
 			if (link != null)
 			{
@@ -99,7 +100,8 @@ namespace ASR.Commands
 					link["application"] = linktemplate;
 					link["display name"] = name;
 					//link["parameters"] = string.Format("id={0}", new ID(Current.Context.ReportItem.Id));
-					link["parameters"] = Sitecore.StringUtil.NameValuesToString(nvc, "&");
+					//link["parameters"] = Sitecore.StringUtil.NameValuesToString(nvc, "&");
+                    link["parameters"] = Current.Context.ReportItem.SerializeParameters();
 					link.Editing.EndEdit();
 				}
 
