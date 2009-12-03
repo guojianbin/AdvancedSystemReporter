@@ -42,18 +42,25 @@ namespace ASR.App
                 ItemList.View = "Details";
                 ItemList.DblClick = "OnOpen";
 
-				openReport(Sitecore.Web.WebUtil.GetQueryString());
-
-                
-                
+				openReport(Sitecore.Web.WebUtil.GetQueryString());                                
 			}
 		}
+
+        [HandleMessage("ASR.MainForm:openlink")]
+        protected void openReport(Message m)
+        {
+            openReport(m.Arguments);
+        }
 
 		private void openReport(string qs)
 		{
 			if (string.IsNullOrEmpty(qs))
 				return;
 			NameValueCollection nvc = Sitecore.StringUtil.ParseNameValueCollection(qs, '&', '=');
+            openReport(nvc);
+        }
+        private void openReport(NameValueCollection nvc)
+        {
 			string id = nvc["id"];
 			if (string.IsNullOrEmpty(id))
 				return;
@@ -67,7 +74,9 @@ namespace ASR.App
 					if (key.Contains("^"))
 					{
 						string[] item_parameter = key.Split('^');
-						ReferenceItem ri = rItem.FindItem(item_parameter[0]);
+                        Guid g = new Guid(item_parameter[0]);
+                        
+						ReferenceItem ri =  rItem.FindItem(g);
 						if (ri != null)
 						{
 							ri.SetAttributeValue(item_parameter[1], nvc[key]);
