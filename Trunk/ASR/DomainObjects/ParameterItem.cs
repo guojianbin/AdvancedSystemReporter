@@ -133,7 +133,7 @@ namespace ASR.DomainObjects
                 dtPicker.Style.Add(System.Web.UI.HtmlTextWriterStyle.VerticalAlign, "middle");
                 input = dtPicker;
             }
-
+            //input.ID = Control.GetUniqueID("input");
             input.Value = this.Value;
             return input;
         }
