@@ -8,11 +8,6 @@ namespace ASR.Reports.Filters
 	{
 		public const string REGEX_PARAMETER = "Regex";
 
-		/// <summary>
-		/// Gets or sets the regular expression used to filter items by their name.
-		/// </summary>
-		/// <value>The regex.</value>
-		public string RegexString { get; set; }
 
 		private Regex _regex;
 		private Regex Regex
