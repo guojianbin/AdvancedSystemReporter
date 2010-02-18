@@ -7,28 +7,11 @@ using Sitecore.Web.UI.Sheer;
 
 namespace ASR.Commands
 {
-     class ExportXML : Command
+     class ExportXML : ExportBaseCommand
     {
-
-        public override void Execute(CommandContext context)
+        protected override string GetFilePath()
         {
-            try
-            {
-                SheerResponse.Download(new Export.XMLExport().Save("asr","xml"));
-            }
-            catch (Exception ex)
-            {
-                SheerResponse.Alert(ex.Message);
-            }
-        }
-        public override CommandState QueryState(CommandContext context)
-        {
-            if (Current.Context.Report == null)
-            {
-                return CommandState.Disabled;
-            }
-
-            return base.QueryState(context);
+           return new Export.XMLExport().Save("asr","xml");
         }
     }
 }

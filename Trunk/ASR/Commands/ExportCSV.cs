@@ -7,35 +7,11 @@ using Sitecore.Web.UI.Sheer;
 
 namespace ASR.Commands
 {
-    class ExportCSV : Command
+    class ExportCSV : ExportBaseCommand
     {
-        public override void Execute(CommandContext context)
+        protected override string GetFilePath()
         {
-            try
-            {
-				if (Current.Context.Report.DisplayElements.Count == 0)
-				{
-					SheerResponse.Alert("Report cannot be exported to CSV if there are no result records.");
-				}
-				else
-				{
-					string tempPath = new Export.CsvExport().Save("asr", "csv");
-					SheerResponse.Download(tempPath);
-				}
-            }
-            catch (Exception ex)
-            {
-                SheerResponse.Alert(ex.Message);               
-            }
-        }
-        public override CommandState QueryState(CommandContext context)
-        {
-            if (Current.Context.Report == null)
-            {
-                return CommandState.Disabled;
-            }
-
-            return base.QueryState(context);
-        }
+            return new Export.CsvExport().Save("asr", "csv");
+        }       
     }
 }

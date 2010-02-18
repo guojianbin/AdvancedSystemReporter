@@ -15,29 +15,12 @@ using Sitecore.Diagnostics;
 
 namespace ASR.Commands
 {
-	public class ExportExcel : Command
+	public class ExportExcel : ExportBaseCommand
 	{
-
-		public override void Execute(CommandContext context)
-		{
-			try
-			{
-				string tempPath = new Export.HtmlExport(Current.Context.Report, Current.Context.ReportItem).SaveFile("asr", "xls");
-				SheerResponse.Download(tempPath);
-			}
-			catch (Exception ex)
-			{
-				SheerResponse.Alert(ex.Message);
-			}
-		}
-		public override CommandState QueryState(CommandContext context)
-		{
-			if (Current.Context.Report == null)
-			{
-				return CommandState.Disabled;
-			}
-
-			return base.QueryState(context);
-		}
+		protected override string GetFilePath()
+        {
+            string tempPath = new Export.HtmlExport(Current.Context.Report, Current.Context.ReportItem).SaveFile("asr", "xls");
+           return tempPath;
+        }
 	}
 }
