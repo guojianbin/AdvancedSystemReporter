@@ -164,12 +164,13 @@ namespace ASR.Reports.Items
 							return StringUtil.Clip(strBuilder.ToString().TrimEnd(',', ' '),MaxLength,true);
 						}
 						break;
+                    case "link":
                     case "general link":
                         LinkField lf = new LinkField(field);
                         switch (lf.LinkType)
                         {
                             case "media":
-                            case "internal": return lf.TargetItem.Name;
+                            case "internal": return lf.TargetItem.Paths.ContentPath;
                             case "anchor":
                             case "mailto":
                             case "external": return lf.Url;
