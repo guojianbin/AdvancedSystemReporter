@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense">
+  <ColumnEditor>
+    <FormDialog Icon="Software/32x32/element.png" Header="Edit report columns" Text="Edit report columns.">
+      <Script Src="/sitecore modules/Shell/ASR/editablecombo.js" Type="text/javascript" Language="Javascript"/>
+      <CodeBeside Type="ASR.Controls.ColumnEditorForm, ASR"/>
+
+      <GridPanel Width="100%" Height="100%" Cellpadding="0" Fixed="true">
+        <GridPanel Columns="2" GridPanel.Width="100%" Height="100%">
+          <!--List of columns-->
+          <Scrollbox ID="Columns" Width="100%" Height="100%" Padding="0px" GridPanel.Width="100%" GridPanel.Height="100%" GridPanel.VAlign="top"/>
+
+          <GridPanel Columns="1">
+            <Button ID="Up" Header="Move Up" Click="MoveUp" Margin="0px 0px 0px 4px"/>
+            <Button ID="Down" Header="Move Down" Click="MoveDown" Margin="0px 0px 0px 4px"/>
+            <Button ID="Remove" Header="Remove" Click="Remove" Margin="0px 0px 0px 4px"/>
+          </GridPanel>
+        </GridPanel>
+
+        <GridPanel Columns="2" CellSpacing="5px" GridPanel.Height="250px" GridPanel.Width="100%">
+          <Groupbox Header="Pre-defined columns. Double click to populate -->" style="height:150px;" GridPanel.VAlign="top">
+            <Listbox ID="lstPredefinedColumns" DblClick="lstPredefinedColumns_OnDblClick" Width="250px" Multiple="true" style="height:100%;" Padding="0" Margin="0">
+
+            </Listbox>
+          </Groupbox>
+          <Groupbox Header="Add column" GridPanel.VAlign="top" GridPanel.Width="100%">
+            <GridPanel Columns="2" Height="100%" >
+              <Literal Text="Column header:" GridPanel.NoWrap="true" />
+              <Edit ID="ColumnHeader" />
+              <Literal Text="Field Key (lowercase field name):" GridPanel.NoWrap="true" />
+              <Edit ID="txtFieldKey" />
+              <Literal Text="Attributes (attr1=xyz|attr2=a,b,c...|...):" GridPanel.NoWrap="true" />
+              <Edit ID="txtAttributes" />
+              <Button ID="Add" Header="Add" Click="Add" GridPanel.ColSpan="2" GridPanel.Align="right" Margin="0px 0px 0px 4px" />
+            </GridPanel>
+            <Panel Background="#FFFFDD" Height="100px" Width="100%" Border="solid 1px gray">
+              <Literal ID="litColumnHelp" Text="No column help" />
+            </Panel>
+          </Groupbox>
+        </GridPanel>
+
+      </GridPanel>
+
+    </FormDialog>
+  </ColumnEditor>
+</control>
