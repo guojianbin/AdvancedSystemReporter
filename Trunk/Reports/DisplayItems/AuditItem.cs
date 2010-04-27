@@ -12,7 +12,7 @@ namespace ASR.Reports.Logs
 
         public void Initialize(string line)
         {            
-            Match match = Regex.Match(line, @"\((?<user>\w+\\\w+)\)[\W:]+(?<verb>[^:]+)[:\W]*(?<rest>.*)");
+            Match match = Regex.Match(line, @"\((?<user>\w+\\\w+)\)[\W:]+(?<verb>[^:\r\n]+)[:\W]*(?<rest>.*)");
             if (match.Success)
             {
                 User = match.Groups["user"].Value;
