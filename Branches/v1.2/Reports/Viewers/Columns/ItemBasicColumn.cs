@@ -22,7 +22,7 @@ namespace ASR.Reports.Viewers.Columns
 
         protected static string standardColumnText(string name, Item itemElement, int iMaxLength)
         {
-            switch (name)
+            switch (name.ToLower())
             {
                 case "name":
                     return itemElement.Name;
