@@ -9,7 +9,7 @@ namespace ASR.Reports.Filters
     public override bool Filter(object element)
     {
       var item = element as Item;
-      if (item == null) return false;
+      if (item == null) return true;
       var allversions = "true" == getParameter(ALLVERSIONS_PARAMETER);
       var brokenlinks = item.Links.GetBrokenLinks(allversions);
       return (brokenlinks != null && brokenlinks.Length > 0);
