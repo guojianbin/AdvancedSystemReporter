@@ -47,14 +47,14 @@ namespace ASR.Reports.Scanners
         {
           foreach (var i in linkdb.GetReferrers(item).Select(l => l.GetSourceItem()))
           {
-            results.Add(i);
+            if(i!=null) results.Add(i);
           }
         }
         else
         {
           foreach (var i in linkdb.GetReferences(item).Select(l => l.GetTargetItem()))
           {
-            results.Add(i);
+            if (i != null) results.Add(i);
           }
         }
       }
