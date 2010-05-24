@@ -38,7 +38,7 @@ namespace ASR.Commands
                     Item newItem = ItemUtil.AddFromTemplate(args.Result, "System/ASR/Saved Report", report);
                     using (new EditContext(newItem))
                     {
-                        newItem["parameters"] = Current.Context.ReportItem.SerializeParameters("^", "|");
+                        newItem["parameters"] = Current.Context.ReportItem.SerializeParameters("^", "&");
                         newItem[Sitecore.FieldIDs.Owner] = Sitecore.Context.User.Name;
                     }
                 }

@@ -1,30 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
+
 using Sitecore.Tasks;
 using Sitecore.Data.Items;
 using Sitecore.Data.Fields;
+using Sitecore.Diagnostics;
+using ASR.DomainObjects;
 
 namespace ASR.Commands
 {
-    public class ScheduledExecution
+  using System.Net.Mail;
+
+  using CommandItem=Sitecore.Tasks.CommandItem;
+  using Sitecore;
+
+  public class ScheduledExecution
     {
         public void EmailReports(Item[] itemarray, CommandItem commandItem, ScheduleItem scheduleItem)
         {
-            //MultilistField mf = commandItem.InnerItem.Fields["reports"];
-            //if (mf != null)
-            //{
-            //    foreach (Item item in mf.GetItems())
-            //    {
-            //        runReport(item);
-            //    }
-            //}
+          var item = commandItem.InnerItem;      
+          if(item["active"] != "1") return;
+
+          MultilistField mf = item.Fields["reports"];
+          if (mf == null) return;
+          var force = item["sendempty"] == "1";
+          var filePaths = mf.GetItems().Select(i => runReport(i,force));
+         
+         
+          var mailMessage = new MailMessage
+            {
+              From = new MailAddress(item["from"]),           
+              Subject = item["subject"],                       
+            };
+          mailMessage.To.Add(item["to"]);
+          
+          mailMessage.Body = Sitecore.Web.UI.WebControls.FieldRenderer.Render(item, "text");
+          mailMessage.IsBodyHtml = true;
+
+          foreach (var path in filePaths.Where(st=>!string.IsNullOrEmpty(st)))
+          {
+            mailMessage.Attachments.Add(new Attachment(path));
+          }
+          MainUtil.SendMail(mailMessage);
         }
 
-        private void runReport(Item item)
+        private static string runReport(Item item, bool force)
         {
-            throw new NotImplementedException(item.Name);
+          Assert.IsNotNull(item, "item");            
+          var reportItem = ReportItem.CreateFromParameters(item["parameters"]);
+          var prefix = reportItem.Name;
+          var report = reportItem.TransformToReport(null);
+          report.Run(null);
+          return report.ResultsCount() != 0 || force
+                   ? new Export.HtmlExport(report, reportItem).SaveFile(prefix, "html")
+                   : null;
         }
     }
 }

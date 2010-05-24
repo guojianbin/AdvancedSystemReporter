@@ -245,8 +245,7 @@ namespace ASR.Interface
 					scannerResults.AddRange(oScanner.Scan());
 				}
 			}
-			Filter();
-			//Sort();
+			Filter();			
 		}
 
 		/// <summary>

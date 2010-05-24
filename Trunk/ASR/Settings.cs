@@ -1,38 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ASR
+﻿namespace ASR
 {
-	public class Settings
+  using Sitecore;
+
+  public class Settings
 	{
 		private static Settings _instance;
 		public static Settings Instance
 		{
 			get
 			{
-				if (Settings._instance == null)
+				if (_instance == null)
 				{
-					Settings._instance = new Settings();
+					_instance = new Settings();
 				}
-				return Settings._instance;
+				return _instance;
 			}
 		}
 
 		protected Settings() { }
 
-		/// <summary>
-		/// Gets the configuration node.
-		/// </summary>
-		/// <value>The configuration node.</value>
-		public string ConfigurationNode
-		{
-			get
-			{
-				return "/sitecore/system/Modules/ASR";
-			}
-		}
+    ///// <summary>
+    ///// Gets the configuration node.
+    ///// </summary>
+    ///// <value>The configuration node.</value>
+    //public string ConfigurationNodes
+    //{
+    //  get
+    //  {
+    //    return "/sitecore/system/Modules/ASR";
+    //  }
+    //}
 
 		/// <summary>
 		/// Gets the configuration database.
@@ -43,37 +40,50 @@ namespace ASR
 		{
 			get
 			{
-				return "master";
+        return Sitecore.Configuration.Settings.GetSetting("ASR.ConfigurationDatabase", "master");
 			}
 		}
 
-		public string EmailFrom
-		{
-			get
-			{
-				return Sitecore.Context.User.Profile.Email;
-			}
-		}
+		
 		/// <summary>
 		/// Gets the reports folder.
 		/// </summary>
 		/// <value>The reports folder.</value>
-		public string ReportsFolder
-		{
-			get
-			{
-				return "/sitecore/system/Modules/ASR/Reports";
-			}
-		}
-		/// <summary>
-		/// Gets the size of the page.
-		/// </summary>
-		/// <value>The size of the page.</value>
+    public string ReportsFolder
+    {
+      get
+      {
+        return Sitecore.Configuration.Settings.GetSetting("ASR.ReportsFolder", "/sitecore/system/Modules/ASR/Reports");
+      }
+    }
+
+    public string ParametersFolder
+    {
+      get
+      {
+        return Sitecore.Configuration.Settings.GetSetting("ASR.ParametersFolder", "/sitecore/system/Modules/ASR/Configuration/Parameters");
+      }
+    }
+
+    public string EmailFrom
+    {
+      get
+      {
+        return Sitecore.Configuration.Settings.GetSetting("ASR.EmailFrom", Sitecore.Context.User.Profile.Email);
+      }
+    }
+
+	  /// <summary>
+	  /// Gets the size of the page.
+	  /// </summary>
+	  /// <value>The size of the page.</value>
+	  private int pageSize = int.MinValue;
 		public int PageSize
 		{
 			get
 			{
-				return 30;
+        if (pageSize < 0) pageSize = int.Parse(Sitecore.Configuration.Settings.GetSetting("ASR.PageSize", "30"));
+				return pageSize;
 			}
 		}
 
@@ -81,20 +91,22 @@ namespace ASR
 		/// Gets the max number pages.
 		/// </summary>
 		/// <value>The max number pages.</value>
-		public int MaxNumberPages
+    private int maxNumberPages = int.MinValue;
+    public int MaxNumberPages
 		{
 			get
 			{
-				return 40;
+        if (maxNumberPages < 0) maxNumberPages = int.Parse(Sitecore.Configuration.Settings.GetSetting("ASR.MaxNoPages", "40"));
+        return maxNumberPages;
 			}
 		}
-
-		public string ParametersFolder
-		{
-			get
-			{
-				return "/sitecore/system/Modules/ASR/Configuration/Parameters";
-			}
-		}
+	
+    public bool AllowNonAdminDownloads
+    {
+      get
+      {
+        return "true" == Sitecore.Configuration.Settings.GetSetting("ASR.AllowNonAdminDownloads", "false");
+      }
+    }
 	}
 }

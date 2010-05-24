@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
 using ASR.DomainObjects;
-using Sitecore.Data.Items;
 using Sitecore;
 using Sitecore.Security.Accounts;
 using ASR.Interface;
@@ -15,9 +14,7 @@ namespace ASR.Export
 		protected Report report;
 		protected ReportItem reportItem;
 
-		private HtmlExport() { }
-
-		public HtmlExport(Report report, ReportItem reportItem)
+	  public HtmlExport(Report report, ReportItem reportItem)
 		{
 			this.report = report;
 			this.reportItem = reportItem;
@@ -25,11 +22,11 @@ namespace ASR.Export
 
 		public string SaveFile(string prefix, string extension)
 		{
-			System.IO.StringWriter oStringWriter = new System.IO.StringWriter();
-			System.Web.UI.HtmlTextWriter oHtmlTextWriter = new System.Web.UI.HtmlTextWriter(oStringWriter);
+			var oStringWriter = new System.IO.StringWriter();
+			var oHtmlTextWriter = new HtmlTextWriter(oStringWriter);
 
-			HashSet<string> headers = new HashSet<string>();
-			IEnumerable<DisplayElement> results = report.GetResultElements();
+			var headers = new HashSet<string>();
+			var results = report.GetResultElements();
 
 			foreach (var dElement in results)
 			{
@@ -42,7 +39,7 @@ namespace ASR.Export
 			printReport(oHtmlTextWriter, headers, results);
 
 
-			string tempPath =
+			var tempPath =
 				Sitecore.IO.FileUtil.GetWorkFilename(Sitecore.Configuration.Settings.TempFolderPath, prefix, extension);
 
 			System.IO.File.WriteAllText(tempPath, oStringWriter.ToString());
@@ -103,20 +100,13 @@ namespace ASR.Export
 			writer.RenderEndTag();//table
 		}
 
-		private Sitecore.Data.Database Db
-		{
-			get
-			{
-				if (Sitecore.Context.ContentDatabase == null)
-				{
-					return Sitecore.Configuration.Factory.GetDatabase("master");
-				}
-				else
-				{
-					return Sitecore.Context.ContentDatabase;
-				}
-			}
-		}
+    private Sitecore.Data.Database Db
+    {
+      get
+      {
+        return Sitecore.Context.ContentDatabase ?? Sitecore.Configuration.Factory.GetDatabase("master");
+      }
+    }
 		/// <summary>
 		/// Prints individual parameters of a reference item.
 		/// </summary>
@@ -144,26 +134,30 @@ namespace ASR.Export
 				oHtmlTextWriter.RenderEndTag();//td
 
 				oHtmlTextWriter.RenderBeginTag(HtmlTextWriterTag.Td);
-				string value = param.Value;
-				if (param.Type == "Dropdown")
+				var value = param.Value;
+				switch (param.Type)
 				{
-					ValueItem friendlyValue = param.PossibleValues().FirstOrDefault(v => v.Value == param.Value);
-					if (friendlyValue != null)
-					{
-						value = friendlyValue.Name;
-					}
-				}
-				else if (param.Type == "Item Selector")
-				{
-					Item item = Db.GetItem(param.Value);
-					if (item != null)
-					{
-						value = item.Paths.FullPath;
-					}
-				}
-				else if (param.Type == "Date picker")
-				{
-					value = DateUtil.FormatIsoDate(param.Value, "dd/MM/yyyy hh:mm");
+				  case "Dropdown":
+				    {
+				      var friendlyValue = param.PossibleValues().FirstOrDefault(v => v.Value == value);
+				      if (friendlyValue != null)
+				      {
+				        value = friendlyValue.Name;
+				      }
+				    }
+				    break;
+				  case "Item Selector":
+				    {
+				      var item = this.Db.GetItem(param.Value);
+				      if (item != null)
+				      {
+				        value = item.Paths.FullPath;
+				      }
+				    }
+				    break;
+				  case "Date picker":
+				    value = DateUtil.FormatIsoDate(param.Value, "dd/MM/yyyy hh:mm");
+				    break;
 				}
 
 				oHtmlTextWriter.Write(value);
@@ -173,7 +167,7 @@ namespace ASR.Export
 			}
 		}
 
-		private void printReport(System.Web.UI.HtmlTextWriter oHtmlTextWriter, IEnumerable<string> headers, IEnumerable<DisplayElement> results)
+		private void printReport(HtmlTextWriter oHtmlTextWriter, IEnumerable<string> headers, IEnumerable<DisplayElement> results)
 		{
 			oHtmlTextWriter.RenderBeginTag(HtmlTextWriterTag.Html);
 			oHtmlTextWriter.RenderBeginTag(HtmlTextWriterTag.Head);

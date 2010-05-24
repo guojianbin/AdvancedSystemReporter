@@ -180,8 +180,8 @@ namespace ASR.Reports.Items
           case "droptree":
           case "reference":
           case "grouped droplink":
-            var lookupFld = (LookupField) field;
-            if (lookupFld != null && lookupFld.TargetItem != null)
+            var lookupFld = (LookupField)field;
+            if (lookupFld.TargetItem != null)
             {
               return lookupFld.TargetItem.Name;
             }
@@ -190,16 +190,13 @@ namespace ASR.Reports.Items
           case "multilist":
           case "treelist":
           case "treelistex":
-            var multilistField = (MultilistField) field;
-            if (multilistField != null)
+            var multilistField = (MultilistField)field;
+            var strBuilder = new StringBuilder();
+            foreach (var item in multilistField.GetItems())
             {
-              var strBuilder = new StringBuilder();
-              foreach (var item in multilistField.GetItems())
-              {
-                strBuilder.AppendFormat("{0}, ", item.Name);
-              }
-              return StringUtil.Clip(strBuilder.ToString().TrimEnd(',', ' '), MaxLength, true);
+              strBuilder.AppendFormat("{0}, ", item.Name);
             }
+            return StringUtil.Clip(strBuilder.ToString().TrimEnd(',', ' '), this.MaxLength, true);
             break;
           case "link":
           case "general link":
@@ -212,7 +209,7 @@ namespace ASR.Reports.Items
                 {
                   return lf.TargetItem.Paths.ContentPath;
                 }
-                return  lf.Value == string.Empty ? "[undefined]" : "[broken link] "+lf.Value;
+                return lf.Value == string.Empty ? "[undefined]" : "[broken link] " + lf.Value;
               case "anchor":
               case "mailto":
               case "external":
