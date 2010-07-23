@@ -1,4 +1,5 @@
-﻿using Sitecore.Diagnostics;
+﻿using System;
+using Sitecore.Diagnostics;
 using ASR.Interface;
 using Sitecore.Collections;
 using System.Collections.Generic;
@@ -36,10 +37,33 @@ namespace ASR.Interface
 			BaseViewer oViewer = BaseViewer.Create(type);
 			oViewer.AddParameters(parameters);
 			InitializeColumns(oViewer, columnsXml);
+            //backwards compatibility
+            if(oViewer.Columns.Count == 0)
+            {
+                InitializeColumnsOld( oViewer);
+            }
 			return oViewer;
 		}
 
-		private static void InitializeColumns(BaseViewer oViewer, string columnsXml)
+	    private static void InitializeColumnsOld(BaseViewer baseViewer)
+	    {
+	        var columns = baseViewer.getParameter("columns");
+	        if (!string.IsNullOrEmpty(columns))
+	        {
+	            var cols = columns.Split(',');
+	            foreach (var col in cols)
+	            {
+	                var c = new Column()
+	                               {
+	                                   Name = col,
+	                                   Header = col
+	                               };
+                    baseViewer.Columns.Add(c);
+	            }
+	        }
+	    }
+
+	    private static void InitializeColumns(BaseViewer oViewer, string columnsXml)
 		{
 			oViewer.Columns = new List<Column>();
 			if (!string.IsNullOrEmpty(columnsXml))
@@ -57,6 +81,7 @@ namespace ASR.Interface
 					oViewer.Columns.Add(column);
 				}
 			}
+			
 		}
 
 		/// <summary>
