@@ -28,7 +28,7 @@ namespace ASR.Interface
 			{
 				if (_viewers == null)
 				{
-					_viewers = viewers.Select(v => BaseViewer.Create(v.Value.FullType, v.Value.Parameters.ToString(), v.Value.ColumnsXml));
+					_viewers = viewers.Select(v => BaseViewer.Create(v.Value.FullType, v.Value.ReplacedAttributes, v.Value.ColumnsXml));
 				}
 				return _viewers;
 			}
