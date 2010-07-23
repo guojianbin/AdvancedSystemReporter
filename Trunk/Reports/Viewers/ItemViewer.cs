@@ -130,7 +130,7 @@ namespace ASR.Reports.Items
         case "language":
           return itemElement.Language.CultureInfo.DisplayName;
         default:
-          return getFriendlyFieldValue(name, itemElement);
+          return GetFriendlyFieldValue(name, itemElement);
       }
     }
 
@@ -166,7 +166,7 @@ namespace ASR.Reports.Items
       return sb.ToString();
     }
 
-    private string getFriendlyFieldValue(string name, Item itemElement)
+    protected virtual string GetFriendlyFieldValue(string name, Item itemElement)
     {
       var field = itemElement.Fields[name];
       if (field != null)
@@ -218,7 +218,7 @@ namespace ASR.Reports.Items
                 return lf.Text;
             }
           default:
-            return StringUtil.Clip(field.Value, MaxLength, true);
+            return StringUtil.Clip( StringUtil.RemoveTags(field.Value), MaxLength, true);
         }
       }
       return String.Empty;
