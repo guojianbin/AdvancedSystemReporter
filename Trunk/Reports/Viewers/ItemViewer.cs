@@ -46,7 +46,16 @@ namespace ASR.Reports.Items
 
     public override void Display(DisplayElement d_element)
     {
-      var itemElement = d_element.Element as Item;
+      Item itemElement = null;
+      if(d_element.Element is Item)
+      {
+          itemElement = (Item) d_element.Element;
+      }
+      else if( d_element.Element is ID)
+      {
+          itemElement = Sitecore.Context.ContentDatabase.GetItem(d_element.Element as ID);
+      }
+       
       if (itemElement == null)
       {
         return;
