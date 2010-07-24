@@ -62,7 +62,7 @@ namespace ASR.Commands
                 
                     Message m = Message.Parse(this, "ASR.MainForm:openlink");
                     System.Collections.Specialized.NameValueCollection nvc = 
-                    Sitecore.StringUtil.ParseNameValueCollection(item["parameters"], '|', '=');
+                    Sitecore.StringUtil.ParseNameValueCollection(item["parameters"], '&', '=');
 
                     m.Arguments.Add(nvc);
                     Sitecore.Context.ClientPage.SendMessage(m);
