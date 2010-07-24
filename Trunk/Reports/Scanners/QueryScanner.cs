@@ -58,7 +58,7 @@ namespace ASR.Reports.Items
 			Item[] results;
 
 
-			if (query.StartsWith("/"))
+			if (query.StartsWith("/") || query.StartsWith("fast:"))
 			{
 				results = Db.SelectItems(query);
 			}
