@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Sitecore.Security;
 using Sitecore.Web.UI.Sheer;
 using Sitecore.Diagnostics;
@@ -18,7 +15,7 @@ namespace ASR.Controls
 				options.Multiple = false;
                 options.ExcludeUsers = "roles".Equals(Filter, StringComparison.InvariantCultureIgnoreCase);
 				options.ExcludeRoles = "users".Equals(Filter,StringComparison.InvariantCultureIgnoreCase);
-				options.DomainName = "sitecore";
+                if (string.IsNullOrEmpty("Folder")) options.DomainName = Folder;
 				SheerResponse.ShowModalDialog(options.ToUrlString().ToString(), true);
 				args.WaitForPostBack();
 			}
