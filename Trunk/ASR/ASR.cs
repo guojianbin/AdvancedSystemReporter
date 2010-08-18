@@ -97,7 +97,12 @@
         this.ItemList.View = "Details";
         this.ItemList.DblClick = "OnOpen";
 
-        openReport(WebUtil.GetQueryString());
+          var queryString = WebUtil.GetQueryString();
+          if(!string.IsNullOrEmpty(queryString))
+          {
+              openReport(queryString);
+          }
+
       }
     }
 
