@@ -165,7 +165,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>xcopy /y /s "$(TargetPath)" "d:\websites\asr\Website\bin\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

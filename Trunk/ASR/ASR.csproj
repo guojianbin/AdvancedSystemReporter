@@ -171,7 +171,9 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>xcopy /y /s "$(ProjectDir)ASR.config" "d:\websites\asr\Website\App_Config\Include\"
+xcopy /y /s "$(ProjectDir)sitecore\shell\*.aspx" "d:\websites\asr\Website\sitecore\shell\"
+xcopy /y /s "$(ProjectDir)*.xml" "d:\websites\asr\Website\sitecore modules\Shell\ASR\"
+xcopy /y /s "$(TargetPath)" "d:\websites\asr\Website\bin\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

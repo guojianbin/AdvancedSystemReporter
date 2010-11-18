@@ -15,11 +15,14 @@ namespace ASR.Commands
 
   public class ScheduledExecution
     {
-        public void EmailReports(Item[] itemarray, CommandItem commandItem, ScheduleItem scheduleItem)
+      private const string LogPrefix = "ASR.Email -- ";
+
+      public void EmailReports(Item[] itemarray, CommandItem commandItem, ScheduleItem scheduleItem)
         {
           var item = commandItem.InnerItem;      
           if(item["active"] != "1") return;
 
+          Log("Starting task");
           MultilistField mf = item.Fields["reports"];
           if (mf == null) return;
           var force = item["sendempty"] == "1";
@@ -31,7 +34,11 @@ namespace ASR.Commands
               From = new MailAddress(item["from"]),           
               Subject = item["subject"],                       
             };
-          mailMessage.To.Add(item["to"]);
+            var senders = item["to"].Split(',');
+            foreach (var sender in senders)
+            {
+                mailMessage.To.Add(sender);                
+            }
           
           mailMessage.Body = Sitecore.Web.UI.WebControls.FieldRenderer.Render(item, "text");
           mailMessage.IsBodyHtml = true;
@@ -40,19 +47,27 @@ namespace ASR.Commands
           {
             mailMessage.Attachments.Add(new Attachment(path));
           }
+          Log("attempting to send message");
           MainUtil.SendMail(mailMessage);
+          Log("task finished");
         }
 
-        private static string runReport(Item item, bool force)
+      private void Log(string message)
+      {
+          Sitecore.Diagnostics.Log.Info(string.Concat(LogPrefix,message),this);
+      }
+
+      private string runReport(Item item, bool force)
         {
           Assert.IsNotNull(item, "item");            
           var reportItem = ReportItem.CreateFromParameters(item["parameters"]);
           var prefix = reportItem.Name;
           var report = reportItem.TransformToReport(null);
           report.Run(null);
+          Log(string.Concat("Run",reportItem.Name));
           return report.ResultsCount() != 0 || force
                    ? new Export.HtmlExport(report, reportItem).SaveFile(prefix, "html")
                    : null;
-        }
+        }   
     }
 }

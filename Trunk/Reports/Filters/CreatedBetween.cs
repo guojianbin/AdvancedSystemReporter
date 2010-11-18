@@ -2,6 +2,8 @@
 using ASR.Interface;
 using ASR.Reports.DisplayItems;
 using Sitecore.Data.Items;
+using Version = Sitecore.Data.Version;
+using System.Linq;
 
 namespace ASR.Reports.Filters
 {
@@ -9,6 +11,7 @@ namespace ASR.Reports.Filters
 	{
 		public const string FROM_DATE_PARAMETER = "FromDate";
 		public const string TO_DATE_PARAMETER = "ToDate";
+	    public const string FIRST_VERSION = "UseFirstVersion";
 
 		/// <summary>
 		/// Gets from date.
@@ -18,10 +21,16 @@ namespace ASR.Reports.Filters
 		{
 			get
 			{
-				string value = base.getParameter(FROM_DATE_PARAMETER);
-				return Sitecore.DateUtil.ParseDateTime(value, DateTime.MinValue);
+                if (_fromDate == DateTime.MinValue)
+                {
+                    string value = base.getParameter(FROM_DATE_PARAMETER);
+                    _fromDate = Sitecore.DateUtil.ParseDateTime(value, DateTime.MinValue);
+                }
+			    return _fromDate;
 			}
 		}
+
+	    private DateTime _fromDate = DateTime.MaxValue;
 
 		/// <summary>
 		/// Gets to date.
@@ -31,10 +40,30 @@ namespace ASR.Reports.Filters
 		{
 			get
 			{
-				string value = base.getParameter(TO_DATE_PARAMETER);
-				return Sitecore.DateUtil.ParseDateTime(value, DateTime.MaxValue);
+                if(_toDate == DateTime.MinValue)
+                {
+                    string value = base.getParameter(TO_DATE_PARAMETER);
+                    _toDate = Sitecore.DateUtil.ParseDateTime(value, DateTime.MaxValue);    
+                }
+			    return _toDate;
 			}
 		}
+
+	    private DateTime _toDate = DateTime.MinValue;
+
+        /// <summary>
+        /// Whether to use the first version
+        /// </summary>
+        /// <value>Use first version.</value>
+        public bool UseFirstVersion
+        {
+            get
+            {        
+                string value = base.getParameter(FIRST_VERSION);
+                return value == "true";
+            }
+        }
+        
 
 		public override bool Filter(object element)
 		{
@@ -49,6 +78,12 @@ namespace ASR.Reports.Filters
 			}
 			if (item != null)
 			{
+                if (UseFirstVersion)
+                {
+                    var versions = item.Versions.GetVersionNumbers();
+                    var minVersion = versions.Min(v => v.Number);
+                    item = item.Database.GetItem(item.ID, item.Language, new Version(minVersion)); 
+                }
 				DateTime dateCreated = item.Statistics.Created;
 				if (FromDate <= dateCreated && dateCreated < ToDate)
 				{
