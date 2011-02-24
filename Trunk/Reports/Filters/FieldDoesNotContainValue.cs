@@ -8,8 +8,7 @@ namespace ASR.Reports.Filters
 	/// </summary>
 	class FieldDoesNotContainValue : ASR.Interface.BaseFilter
 	{
-		public const string FIELD_NAME_PARAMETER = "FieldName";
-		public const string FIELD_VALUE_PARAMETER = "Value";
+		
 
 		/// <summary>
 		/// Gets the name of the field.
@@ -17,10 +16,7 @@ namespace ASR.Reports.Filters
 		/// <value>The name of the field.</value>
 		public string FieldName
 		{
-			get
-			{
-				return getParameter(FIELD_NAME_PARAMETER);
-			}
+			get;set;			
 		}
 
 		/// <summary>
@@ -29,10 +25,7 @@ namespace ASR.Reports.Filters
 		/// <value>The value.</value>
 		public string Value
 		{
-			get
-			{
-				return getParameter(FIELD_VALUE_PARAMETER);
-			}
+			get;set;
 		}
 
 		public override bool Filter(object element)

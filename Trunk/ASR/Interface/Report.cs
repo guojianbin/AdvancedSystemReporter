@@ -28,7 +28,7 @@ namespace ASR.Interface
 			{
 				if (_viewers == null)
 				{
-					_viewers = viewers.Select(v => BaseViewer.Create(v.Value.FullType, v.Value.ReplacedAttributes, v.Value.ColumnsXml));
+					_viewers = viewers.Select(v => BaseViewer.Create(v.Value.FullType, v.Value.ReplacedAttributes, v.Value.ColumnsXml)).ToList();
 				}
 				return _viewers;
 			}
@@ -253,7 +253,7 @@ namespace ASR.Interface
 		/// </summary>
 		public void Filter()
 		{
-			IEnumerable<BaseFilter> oFilters = filters.Select(p => BaseFilter.Create(p.Value.FullType, p.Value.ReplacedAttributes));
+			IEnumerable<BaseFilter> oFilters = filters.Select(p => BaseFilter.Create(p.Value.FullType, p.Value.ReplacedAttributes)).ToList();
 			results = new ArrayList();
 
 			foreach (var element in scannerResults)

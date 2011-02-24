@@ -37,7 +37,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\WebSite\bin\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -46,7 +46,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\svn\MROnline\MRInternet\trunk\Release 3\WebSite\bin\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\TrimVersions.cs" />
     <Compile Include="DisplayItems\ItemWorkflowEvent.cs" />
     <Compile Include="DisplayItems\MediaUsageItem.cs" />
     <Compile Include="Filters\ContainsBrokenLinks.cs" />
@@ -82,7 +83,6 @@
     <Compile Include="Filters\InvalidName.cs" />
     <Compile Include="Filters\ItemsOfType.cs" />
     <Compile Include="Filters\ItemsWithResettableVersions.cs" />
-    <Compile Include="Filters\ManyVersions.cs" />
     <Compile Include="Filters\NoPublishableVersions.cs" />
     <Compile Include="Filters\NoReferrers.cs" />
     <Compile Include="Filters\NoWorkflow.cs" />
@@ -99,7 +99,9 @@
     <Compile Include="Exceptions\RootItemNotFoundException.cs" />
     <Compile Include="Filters\FieldContainsValue.cs" />
     <Compile Include="Filters\FieldDoesNotContainValue.cs" />
+    <Compile Include="Scanners\DatabaseScanner.cs" />
     <Compile Include="Scanners\LinkedItemsScanner.cs" />
+    <Compile Include="Scanners\OwnedItemsScanner.cs" />
     <Compile Include="Scanners\PublishableItems.cs" />
     <Compile Include="Scanners\QueryScannerID.cs" />
     <Compile Include="Scanners\WorkflowHistory.cs" />

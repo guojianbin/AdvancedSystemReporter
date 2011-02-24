@@ -135,6 +135,9 @@ namespace ASR.Reports.Items
 
         case "version":
           return itemElement.Version.ToString();
+        
+        case "versions":
+          return itemElement.Versions.Count.ToString();
 
         case "language":
           return itemElement.Language.CultureInfo.DisplayName;
@@ -177,6 +180,8 @@ namespace ASR.Reports.Items
 
     protected virtual string GetFriendlyFieldValue(string name, Item itemElement)
     {
+     // to allow forcing fields rather than properties, allow prepending the name with #
+        name = name.TrimStart('@');
       var field = itemElement.Fields[name];
       if (field != null)
       {

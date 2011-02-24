@@ -9,21 +9,22 @@ namespace ASR.Reports.Items
 	public class AuditPerItem : ASR.Interface.BaseScanner
 	{
 		public enum Mode { Item = -1, Descendants = 1, Children = 0 };
-		private string _deep;
-		public Mode Deep
+
+        public int Deep { get; set; }
+		public Mode DeepMode
 		{
 			get
 			{
-				if (string.IsNullOrEmpty(_deep))
-				{
-					_deep = getParameter("deep");
-				}
-				return (Mode)int.Parse(_deep);
+                //if (string.IsNullOrEmpty(Deep))
+                //{
+                //    _deep = getParameter("deep");
+                //}
+				return (Mode)Deep;
 			}
 		}
 
 		private Item _root;
-		public Item Root
+		public Item RootItem
 		{
 			get
 			{
@@ -35,18 +36,19 @@ namespace ASR.Reports.Items
 			}
 		}
 
-		public string _allversions;
-		public bool AllVersions
-		{
-			get
-			{
-				if (string.IsNullOrEmpty(_allversions))
-				{
-					_allversions = getParameter("allversions");
-				}
-				return _allversions == "1";
-			}
-		}
+        public string _allversions;
+
+        public bool SearchAllVersions
+        {            
+            get
+            {
+                if (string.IsNullOrEmpty(_allversions))
+                {
+                    _allversions = getParameter("allversions");
+                }
+                return _allversions == "1";
+            }
+        }
 
 		private Database _db;
 		/// <summary>
@@ -76,22 +78,22 @@ namespace ASR.Reports.Items
 
 			Item[] items;
 			ArrayList results = new ArrayList();
-			switch (Deep)
+			switch (DeepMode)
 			{
 				case Mode.Descendants:
-					items = Root.Axes.GetDescendants();
+					items = RootItem.Axes.GetDescendants();
 					break;
 				case Mode.Children:
-					items = Root.Axes.SelectItems("./*");
+					items = RootItem.Axes.SelectItems("./*");
 					break;
 				default:
-					items = new Item[] { Root };
+					items = new Item[] { RootItem };
 					break;
 			}
 
 			foreach (var item in items)
 			{
-				if (AllVersions)
+				if (SearchAllVersions)
 				{
 					foreach (var version in item.Versions.GetVersions())
 					{

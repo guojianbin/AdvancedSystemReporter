@@ -11,7 +11,7 @@ namespace ASR.Reports.Logs
 	{
 		public readonly static string DEFAULT_PATTERN = "*.txt";
 		public readonly static string ENTRY_TYPES_PARAMETER = "types";
-		public readonly static string AGE_PARAMETER = "age";
+		
 
 		private string valid_types;
 		protected string Valid_Types
@@ -51,19 +51,11 @@ namespace ASR.Reports.Logs
 			}
 		}
 
-		private int _age = int.MinValue;
 		protected int Age
-		{
-			get
-			{
-				if (_age == int.MinValue)
-				{
-					if (!int.TryParse(getParameter(AGE_PARAMETER), out _age))
-						_age = -1;
-				}
-				return _age;
-			}
-		}
+        {
+            get; set;        
+        }
+
 		protected string logFolder
 		{
 			get

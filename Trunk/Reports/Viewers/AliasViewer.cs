@@ -27,7 +27,7 @@ namespace ASR.Reports.Viewers
                 InitializeAlias(item.Database);
                 Error.AssertNotNull(_alias,"error initializing alias table");
             }
-            return _alias.ContainsKey(item.ID) ? _alias[item.ID] : null;
+            return _alias.ContainsKey(item.ID) ? _alias[item.ID] : "[no alias]";
         }
 
         private void InitializeAlias(Database db)

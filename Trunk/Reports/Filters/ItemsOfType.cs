@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using Sitecore.Data;
+using Sitecore.Data.Items;
 
 namespace ASR.Reports.Filters
 {
@@ -7,27 +9,15 @@ namespace ASR.Reports.Filters
 	{
 		public string TemplateID { get; set; }
 
-		#region ASR.Interface.BaseFilter Members
-
-		public bool ExecFilter(Sitecore.Data.Items.Item item)
-		{
-			string[] templateIDs = TemplateID.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-
-			foreach (string templateID in templateIDs)
-			{
-				if (item.TemplateID.ToString() == templateID)
-				{
-					return true;
-				}
-			}
-			return false;
-		}
-
-		#endregion
-
+	
 		public override bool Filter(object element)
 		{
-			throw new NotImplementedException();
+		    var item = element as Item;
+            if (item == null) return true;
+
+            string[] templateIDs = TemplateID.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+
+		    return templateIDs.Any(templateID => item.TemplateID.ToString() == templateID);
 		}
 	}
 }

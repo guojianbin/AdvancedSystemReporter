@@ -7,24 +7,12 @@ namespace ASR.Reports.Filters
 	class RegexFieldFilter : ASR.Interface.BaseFilter
 	{
 		public const string REGEX_PARAMETER = "Regex";
-        public const string FIELD_PARAMETER = "Field";
 
-        private string _field;
-        private string Field
-        {
-            get
-            {
-                if (_field == null)
-                {
-                    _field = base.getParameter(FIELD_PARAMETER);                    
-                }
-                return _field;
-            }
-        }
+        private string Field { get; set; }
 		
 
 		private Regex _regex;
-		private Regex Regex
+		private Regex RegexObject
 		{
 			get
 			{
@@ -47,11 +35,11 @@ namespace ASR.Reports.Filters
 			{
                 if (string.IsNullOrEmpty(Field))
                 {
-                    return Regex.IsMatch(item.Name);
+                    return RegexObject.IsMatch(item.Name);
                 }
                 else
                 {
-                    return Regex.IsMatch(item[Field]);
+                    return RegexObject.IsMatch(item[Field]);
                 }
 			}
 			return false;

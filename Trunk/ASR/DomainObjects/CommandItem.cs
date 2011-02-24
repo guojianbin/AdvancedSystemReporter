@@ -10,6 +10,7 @@ using Sitecore.Data.Items;
 using Sitecore.Collections;
 using Sitecore.Data;
 using Sitecore.Diagnostics;
+using Sitecore.Reflection;
 
 namespace ASR.DomainObjects
 {
@@ -59,8 +60,19 @@ namespace ASR.DomainObjects
                 }
             }
 
-            Command command = CommandManager.GetCommand(Command);
+            Command command = CommandManager.GetCommand(Command) 
+                ?? (Command)ReflectionUtil.CreateObject(Command);
             Debug.Assert(command != null, Command + " not found.");
+            //pass parameters
+            var indexSt = Command.IndexOf('(')+1;
+            if (indexSt > 0)
+            {
+                var length = Command.IndexOf(')') - indexSt;
+                if(length > 0)
+                {
+                    ReflectionUtil.SetProperties(command, Command.Substring(indexSt, length));    
+                }                
+            }
 
             // If our command can hanlde more than one item in the context we run it once
             if (!SingleItemContext)

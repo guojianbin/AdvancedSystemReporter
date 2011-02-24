@@ -9,7 +9,7 @@ namespace ASR.Reports.Items
 			Item itemElement = element as Item;
 			if (itemElement != null)
 			{
-				return itemElement.Versions.Count >= this.number;
+				return itemElement.Versions.Count >= this.Number;
 			}
 			return false;
 		}

@@ -9,60 +9,25 @@ namespace ASR.Reports.Filters
 {
 	class CreatedBetween : BaseFilter
 	{
-		public const string FROM_DATE_PARAMETER = "FromDate";
-		public const string TO_DATE_PARAMETER = "ToDate";
-	    public const string FIRST_VERSION = "UseFirstVersion";
+      /// <summary>
+	    /// Gets from date.
+	    /// </summary>
+	    /// <value>From date.</value>
+        public DateTime FromDate { get; set; }	  
 
-		/// <summary>
-		/// Gets from date.
-		/// </summary>
-		/// <value>From date.</value>
-		public DateTime FromDate
-		{
-			get
-			{
-                if (_fromDate == DateTime.MinValue)
-                {
-                    string value = base.getParameter(FROM_DATE_PARAMETER);
-                    _fromDate = Sitecore.DateUtil.ParseDateTime(value, DateTime.MinValue);
-                }
-			    return _fromDate;
-			}
-		}
+	    /// <summary>
+	    /// Gets to date.
+	    /// </summary>
+	    /// <value>To date.</value>
+        public DateTime ToDate { get; set; }
 
-	    private DateTime _fromDate = DateTime.MaxValue;
+	    
 
-		/// <summary>
-		/// Gets to date.
-		/// </summary>
-		/// <value>To date.</value>
-		public DateTime ToDate
-		{
-			get
-			{
-                if(_toDate == DateTime.MinValue)
-                {
-                    string value = base.getParameter(TO_DATE_PARAMETER);
-                    _toDate = Sitecore.DateUtil.ParseDateTime(value, DateTime.MaxValue);    
-                }
-			    return _toDate;
-			}
-		}
-
-	    private DateTime _toDate = DateTime.MinValue;
-
-        /// <summary>
-        /// Whether to use the first version
-        /// </summary>
-        /// <value>Use first version.</value>
-        public bool UseFirstVersion
-        {
-            get
-            {        
-                string value = base.getParameter(FIRST_VERSION);
-                return value == "true";
-            }
-        }
+	    /// <summary>
+	    /// Whether to use the first version
+	    /// </summary>
+	    /// <value>Use first version.</value>
+        public bool UseFirstVersion { get; set; }
         
 
 		public override bool Filter(object element)

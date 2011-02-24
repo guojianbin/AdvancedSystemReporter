@@ -6,31 +6,11 @@ namespace ASR.Reports.Items
 {
     public class LockFilter : ASR.Interface.BaseFilter
     {
-
-        public static string OWNER_PARAMETER = "owner";
-        public static string AGE_PARAMETER = "age";
-        public string Owner
-        {
-            get
-            {
-                return getParameter(OWNER_PARAMETER);
-            }
-        }
-
-        private int _age = int.MinValue;
+        public string Owner { get; set; }
+        
         public int Age
         {
-            get
-            {
-                if (_age == int.MinValue)
-                {
-                    if (!int.TryParse(getParameter(AGE_PARAMETER),out _age))
-                    {
-                        _age = -1;
-                    }
-                }
-                return _age;
-            }
+            get; set;
         }
 
         public override bool Filter(object element)

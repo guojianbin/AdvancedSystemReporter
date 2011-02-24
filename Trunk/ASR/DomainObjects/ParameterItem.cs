@@ -124,13 +124,14 @@ namespace ASR.DomainObjects
             }
             else if (this.Type == "Date picker")
             {
-                DateTimePicker dtPicker = new ASR.Controls.DateTimePicker();
+                var dtPicker = new ASR.Controls.DateTimePicker();
                 dtPicker.Style.Add("float", "left");
                 dtPicker.ID = Sitecore.Web.UI.HtmlControls.Control.GetUniqueID("input");
                 dtPicker.ShowTime = false;
                 dtPicker.Click = "datepicker" + ":" + dtPicker.ID;
                 dtPicker.Style.Add(System.Web.UI.HtmlTextWriterStyle.Display, "inline");
                 dtPicker.Style.Add(System.Web.UI.HtmlTextWriterStyle.VerticalAlign, "middle");
+                if (this.Parameters["Format"] != null) dtPicker.Format = this.Parameters["Format"];
                 input = dtPicker;
             }
             //input.ID = Control.GetUniqueID("input");

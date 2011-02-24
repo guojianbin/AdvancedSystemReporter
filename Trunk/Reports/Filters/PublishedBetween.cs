@@ -7,34 +7,17 @@ namespace ASR.Reports.Filters
 {
 	public class PublishedBetween : ASR.Interface.BaseFilter
 	{
-		public const string FROM_DATE_PARAMETER = "FromDate";
-		public const string TO_DATE_PARAMETER = "ToDate";
+	    /// <summary>
+	    /// Gets from date.
+	    /// </summary>
+	    /// <value>From date.</value>
+        public DateTime FromDate { get; set; }
 
-		/// <summary>
-		/// Gets from date.
-		/// </summary>
-		/// <value>From date.</value>
-		public DateTime FromDate
-		{
-			get
-			{
-				string value = base.getParameter(FROM_DATE_PARAMETER);
-				return Sitecore.DateUtil.ParseDateTime(value, DateTime.MinValue);
-			}
-		}
-
-		/// <summary>
-		/// Gets to date.
-		/// </summary>
-		/// <value>To date.</value>
-		public DateTime ToDate
-		{
-			get
-			{
-				string value = base.getParameter(TO_DATE_PARAMETER);
-				return Sitecore.DateUtil.ParseDateTime(value, DateTime.MaxValue);
-			}
-		}
+	    /// <summary>
+	    /// Gets to date.
+	    /// </summary>
+	    /// <value>To date.</value>
+	    public DateTime ToDate { get; set; }
 
 		public override bool Filter(object element)
 		{

@@ -10,7 +10,7 @@ namespace ASR.Reports.Filters
 
 
 		private Regex _regex;
-		private Regex Regex
+		private Regex RegexObject
 		{
 			get
 			{
@@ -31,7 +31,7 @@ namespace ASR.Reports.Filters
 			Item item = element as Item;
 			if (item != null)
 			{
-				return Regex.IsMatch(item.Name);
+				return RegexObject.IsMatch(item.Name);
 			}
 			return false;
 		}

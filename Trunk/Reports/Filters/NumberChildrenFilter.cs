@@ -10,7 +10,7 @@ namespace ASR.Reports.Items
             Item itemElement = element as Item;
             if (itemElement != null)
             {
-                return itemElement.Children.Count > this.number;
+                return itemElement.Children.Count > this.Number;
             }
             return false;
         }

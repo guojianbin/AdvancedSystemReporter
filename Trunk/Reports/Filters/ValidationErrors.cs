@@ -16,11 +16,11 @@ namespace ASR.Reports.Filters
 			Item item = element as Item;
 			if (item != null)
 			{
-				ValidatorCollection validators = ValidatorManager.BuildValidators(Mode, item);
+				ValidatorCollection validators = ValidatorManager.BuildValidators(ValidatorsMode, item);
 				ValidatorManager.Validate(validators, new ValidatorOptions(false));
 				foreach (BaseValidator validator in validators)
 				{
-					if (validator.Result >= MinErrorLevel)
+					if (validator.Result >= ValidatorMinErrorLevel)
 					{
 						return true;
 					}
@@ -29,20 +29,22 @@ namespace ASR.Reports.Filters
 			return false;
 		}
 
-		public ValidatorResult MinErrorLevel
+	    public string MinErrorLevel { get; set; }
+		public ValidatorResult ValidatorMinErrorLevel
 		{
 			get
 			{
-				string value = base.getParameter("MinErrorLevel");
-				return (ValidatorResult)Enum.Parse(typeof(ValidatorResult), value);
+			
+				return (ValidatorResult)Enum.Parse(typeof(ValidatorResult), MinErrorLevel);
 			}
 		}
-		public ValidatorsMode Mode
+
+        public string Mode { get; set; }
+		public ValidatorsMode ValidatorsMode
 		{
 			get
-			{
-				string value = getParameter("Mode");
-				return (ValidatorsMode)Enum.Parse(typeof(ValidatorsMode), value);
+			{				
+				return (ValidatorsMode)Enum.Parse(typeof(ValidatorsMode), Mode);
 			}
 		}
 	}

@@ -7,23 +7,8 @@ namespace ASR.Reports.Filters
 {
     class StaleWorkflowItems : BaseFilter
     {
-        public const string AGE_PARAMETER = "Age";
-        private int _age = int.MinValue;
-        protected int Age
-        {
-            get
-            { 
-                if(_age == int.MinValue)
-                {
-                    if (!int.TryParse(getParameter(AGE_PARAMETER), out _age))
-                    {
-                        _age = 0;
-                    }
-                }
-                return _age;
-            }
-        }
-
+        protected int Age { get; set; }
+        
         public override bool Filter(object element)
         {
             Debug.ArgumentNotNull(element, "element");

@@ -35,6 +35,7 @@
               <ListItem value="updated">Updated</ListItem>
               <ListItem value="updated by">Updated by</ListItem>
               <ListItem value="version">Version</ListItem>
+                <ListItem value="versions">Number of Versions</ListItem>
               <ListItem value="workflow">Workflow</ListItem>              
             </ASRComboEdit>
 

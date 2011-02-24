@@ -9,24 +9,10 @@ namespace ASR.Reports.Filters
 	/// </summary>
 	class FieldContainsValue : ASR.Interface.BaseFilter
 	{
-		public const string FIELD_NAME_PARAMETER = "FieldName";
-		public const string VALUE_PARAMETER = "Value";
 
-		public string FieldName
-		{
-			get
-			{
-				return base.getParameter(FIELD_NAME_PARAMETER);
-			}
-		}
+        public string FieldName { get; set; }
 
-		public string Value
-		{
-			get
-			{
-				return base.getParameter(VALUE_PARAMETER);
-			}
-		}
+        public string Value { get; set; }
 
 		public override bool Filter(object element)
 		{

@@ -12,7 +12,13 @@ namespace ASR.DomainObjects
 	[Template("System/ASR/Reference")]
 	public class ReferenceItem : CorePoint.DomainObjects.SC.StandardTemplate
 	{
-		[Field("assembly")]
+        private string _currentuser;
+	    public ReferenceItem()
+	    {
+	        _currentuser = Sitecore.Context.User.Name;
+	    }
+
+	    [Field("assembly")]
 		public string Assembly
 		{
 			get;
@@ -42,13 +48,18 @@ namespace ASR.DomainObjects
 					string tag = string.Concat('{', pi.Name, '}');
 					_replacedAttributes = _replacedAttributes.Replace(tag, pi.Value);
 				}
-				_replacedAttributes = _replacedAttributes.Replace("$sc_lastyear", DateTime.Today.AddYears(-1).ToString("yyyyMMddTHHmmss"));
-				_replacedAttributes = _replacedAttributes.Replace("$sc_lastweek", DateTime.Today.AddDays(-7).ToString("yyyyMMddTHHmmss"));
-				_replacedAttributes = _replacedAttributes.Replace("$sc_lastmonth", DateTime.Today.AddMonths(-1).ToString("yyyyMMddTHHmmss"));
-				_replacedAttributes = _replacedAttributes.Replace("$sc_yesterday", DateTime.Today.AddDays(-1).ToString("yyyyMMddTHHmmss"));
-				_replacedAttributes = _replacedAttributes.Replace("$sc_today", DateTime.Today.ToString("yyyyMMddTHHmmss"));
-				_replacedAttributes = _replacedAttributes.Replace("$sc_now", DateTime.Now.ToString("yyyyMMddTHHmmss"));
-				return _replacedAttributes.Replace("$sc_currentuser", Sitecore.Context.User == null ? string.Empty : Sitecore.Context.User.Name);
+
+                if (_replacedAttributes.Contains("$"))
+                {
+                    _replacedAttributes = _replacedAttributes.Replace("$sc_lastyear", DateTime.Today.AddYears(-1).ToString("yyyyMMddTHHmmss"));
+                    _replacedAttributes = _replacedAttributes.Replace("$sc_lastweek", DateTime.Today.AddDays(-7).ToString("yyyyMMddTHHmmss"));
+                    _replacedAttributes = _replacedAttributes.Replace("$sc_lastmonth", DateTime.Today.AddMonths(-1).ToString("yyyyMMddTHHmmss"));
+                    _replacedAttributes = _replacedAttributes.Replace("$sc_yesterday", DateTime.Today.AddDays(-1).ToString("yyyyMMddTHHmmss"));
+                    _replacedAttributes = _replacedAttributes.Replace("$sc_today", DateTime.Today.ToString("yyyyMMddTHHmmss"));
+                    _replacedAttributes = _replacedAttributes.Replace("$sc_now", DateTime.Now.ToString("yyyyMMddTHHmmss"));
+                    _replacedAttributes = _replacedAttributes.Replace("$sc_currentuser", _currentuser); 
+                }
+			    return _replacedAttributes;
 			}
 		}
 		public string FullType
@@ -124,7 +135,7 @@ namespace ASR.DomainObjects
 		private ParameterItem findItem(string name)
 		{
 			string path = string.Concat(Settings.Instance.ParametersFolder, "/", name);
-
+            
 			return this.Director.GetObjectByIdentifier<ParameterItem>(path);
 		}
 

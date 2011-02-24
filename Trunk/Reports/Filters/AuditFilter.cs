@@ -3,11 +3,8 @@ namespace ASR.Reports.Logs
 {
   public class AuditFilter : Interface.BaseFilter
   {
-    public static string USER_PARAMETER = "user";
-    public static string VERB_PARAMETER = "verb";
-
-    public string Verb { get { return getParameter(VERB_PARAMETER); } }
-    public string User { get { return getParameter(USER_PARAMETER); } }
+      public string Verb { get; set; }
+      public string User { get; set; }
 
     public override bool Filter(object element)
     {

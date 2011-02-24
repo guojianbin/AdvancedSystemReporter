@@ -11,7 +11,7 @@ namespace ASR.Reports.Items
             if (itemElement != null)
             {
                 Sitecore.Diagnostics.Assert.ArgumentNotNull(element, "element");
-                return itemElement.Name.Length == this.number;
+                return itemElement.Name.Length == this.Number;
             }
             return false;
         }

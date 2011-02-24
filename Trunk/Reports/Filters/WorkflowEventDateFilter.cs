@@ -13,22 +13,9 @@ namespace ASR.Reports.Filters
 		}
 
 		#region Parameters
-		public DateTime FromDate
-		{
-			get
-			{
-				string value = base.getParameter("FromDate");
-				return Sitecore.DateUtil.ParseDateTime(value, DateTime.MinValue);
-			}
-		}
-		public DateTime ToDate
-		{
-			get
-			{
-				string value = base.getParameter("ToDate");
-				return Sitecore.DateUtil.ParseDateTime(value, DateTime.MaxValue);
-			}
-		}
+
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
 		#endregion
 
 		public override bool Filter(object element)
