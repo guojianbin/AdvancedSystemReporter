@@ -1,6 +1,12 @@
 Advanced System Reporter
 ------------------------
 
+v.1.4.1
+
+- Fixed error in WorkflowStateScanner
+
+- Fix the default sorting options for viewers. You can add sort=[name of column],[ASC|DESC][DateTime] to viewers (thanks to Marko Tsoi for thi fix)
+
 v 1.4
 
 - Greatly improved performance
