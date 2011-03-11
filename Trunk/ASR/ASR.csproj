@@ -143,7 +143,9 @@
     <Content Include="sitecore\shell\download.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ASR.config" />
+    <None Include="ASR.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

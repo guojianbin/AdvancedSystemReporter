@@ -45,7 +45,7 @@ namespace ASR.Interface
 			{
 				if (_displayElements == null)
 				{
-					var tmp = results.OfType<object>().Select(t => IntializeDisplayElement(t));
+					var tmp = results.OfType<object>().Select(IntializeDisplayElement);
 					tmp = Sort(tmp);
 					_displayElements = tmp.ToList();
 				}
@@ -56,32 +56,47 @@ namespace ASR.Interface
 
 		private IEnumerable<DisplayElement> Sort(IEnumerable<DisplayElement> tmp)
 		{
-			if (SortColumns != null)
-			{
-				foreach (string columnName in SortColumns.Keys)
-				{
-					string sortOptions = SortColumns[columnName];
-					Func<DisplayElement, object> columnValue = null;
-					if (sortOptions.Contains("DateTime"))
-					{
-						columnValue = t => ParseDate(t.GetColumnValue(columnName));
-					}
-					else
-					{
-						columnValue = t => t.GetColumnValue(columnName);
-					}
+            // if no columns to sort by, then just return the tmp variable
+            if (SortColumns == null || SortColumns.Count == 0)
+            {
+                return tmp;
+            }
 
-					if (sortOptions.Contains("ASC"))
-					{
-						tmp = tmp.OrderBy(columnValue);
-					}
-					else if (sortOptions.Contains("DESC"))
-					{
-						tmp = tmp.OrderByDescending(columnValue);
-					}
-				}
-			}
-			return tmp;
+            IOrderedEnumerable<DisplayElement> sortedList = null;
+
+            bool isFirstTimeThrough = true;
+
+            foreach (string columnName in SortColumns.Keys)
+            {
+                Func<DisplayElement, object> columnValue = null;
+                string sortOptions = SortColumns[columnName];
+                // need to copy the column name, or it executes against the wrong column when we actually do the sort
+                string copyOfColumnName = columnName;
+
+                // sort datetime values separately
+                if (sortOptions.Contains("DateTime"))
+                {
+                    columnValue = t => ParseDate(t.GetColumnValue(copyOfColumnName));
+                }
+                else
+                {
+                    columnValue = t => t.GetColumnValue(copyOfColumnName);
+                }
+
+                // and sort based on order
+                if (sortOptions.Contains("ASC"))
+                {
+                    sortedList = (isFirstTimeThrough) ? tmp.OrderBy(columnValue):sortedList.ThenBy(columnValue);
+                    isFirstTimeThrough = false;
+                }
+                else if (sortOptions.Contains("DESC"))
+                {
+                    sortedList = (isFirstTimeThrough) ? tmp.OrderByDescending(columnValue):sortedList.ThenByDescending(columnValue);
+                    isFirstTimeThrough = false;
+                }
+            }
+            return sortedList;
+
 		}
 
 		private object ParseDate(string value)
@@ -104,59 +119,13 @@ namespace ASR.Interface
 
 		private DisplayElement IntializeDisplayElement(object resultItem)
 		{
-			DisplayElement dElement = new DisplayElement(resultItem);
+			var dElement = new DisplayElement(resultItem);
 			foreach (var oViewer in Viewers)
 			{
 				oViewer.Display(dElement);
 			}
 			return dElement;
 		}
-
-		//private struct BaseObjectDefinition
-		//{
-		//    public BaseObjectDefinition(string type, string parameters)
-		//    {
-		//        this.type = type;
-		//        this.parameters = parameters;
-		//    }
-		//    public string type;
-		//    public string parameters;
-
-		//    public override bool Equals(object obj)
-		//    {
-		//        if (obj is BaseObjectDefinition)
-		//        {
-		//            return this.Equals((BaseObjectDefinition)obj);
-		//        }
-		//        return false;
-		//    }
-
-		//    public override int GetHashCode()
-		//    {
-		//        return this.parameters.GetHashCode() ^ this.type.GetHashCode();
-		//    }
-
-		//    #region IEquatable<BaseObjectDefinition> Members
-
-		//    bool Equals(BaseObjectDefinition other)
-		//    {
-		//        if (object.ReferenceEquals(other, this))
-		//            return true;
-		//        return other.type == this.type && other.parameters == this.parameters;
-		//    }
-
-		//    #endregion
-
-		//    public static bool operator ==(BaseObjectDefinition obj1, BaseObjectDefinition obj2)
-		//    {
-		//        return obj1.Equals(obj2);
-		//    }
-
-		//    public static bool operator !=(BaseObjectDefinition obj1, BaseObjectDefinition obj2)
-		//    {
-		//        return !obj1.Equals(obj2);
-		//    }
-		//}
 
 		public Report()
 		{
@@ -310,20 +279,22 @@ namespace ASR.Interface
 			return results.Count;
 		}
 
+	  
 		private NameValueCollection _sortColumns;
 		protected NameValueCollection SortColumns
 		{
 			get
 			{
 				if (_sortColumns == null)
-				{
+				{ 
+                    _sortColumns = new NameValueCollection();
 					foreach (var viewer in viewers.Values)
 					{
 						NameValueCollection parameters = Sitecore.StringUtil.ParseNameValueCollection(viewer.ReplacedAttributes, '|', '=');
 						string sortParameter = parameters["sort"];
 						if (sortParameter != null)
 						{
-							_sortColumns = StringUtil.ParseNameValueCollection(sortParameter, '&', ',');
+							_sortColumns.Add( StringUtil.ParseNameValueCollection(sortParameter, '&', ',') );
 						}
 					}
 				}

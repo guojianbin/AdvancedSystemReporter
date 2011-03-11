@@ -1,93 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using ASR.Interface;
 using System.Collections;
-using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Workflows;
-using Sitecore.Configuration;
-using ASR.Reports.Items.Exceptions;
 using ASR.Reports.DisplayItems;
 
 namespace ASR.Reports.Scanners
 {
-	class WorkflowEventScanner : BaseScanner
+	class WorkflowEventScanner : DatabaseScanner
 	{
 		#region Parameters
 		public enum Mode { Item = -1, Descendants = 1, Children = 0 };
-		private string _deep;
+		private string _scanMode;
 		/// <summary>
 		/// Gets the scanning deeph.
 		/// </summary>
 		/// <value>The deep.</value>
 		/// <remarks>We can scan Item (-1), Descendants (1) or Children (0).</remarks>
-		public Mode Deep
+		public Mode ScanMode
 		{
 			get
 			{
-				if (string.IsNullOrEmpty(_deep))
+				if (string.IsNullOrEmpty(_scanMode))
 				{
-					_deep = getParameter("deep");
+					_scanMode = getParameter("deep");
 				}
-				return (Mode)int.Parse(_deep);
+				return (Mode)int.Parse(_scanMode);
 			}
 		}
 
-		private Item _root;
-		/// <summary>
-		/// Gets the root.
-		/// </summary>
-		/// <value>The root.</value>
-		public Item Root
-		{
-			get
-			{
-				if (_root == null)
-				{
-					_root = Db.GetItem(getParameter("root"));
-				}
-				return _root;
-			}
-		}
+	    /// <summary>
+	    /// Gets a value indicating whether all versions should be scanned.
+	    /// </summary>
+	    /// <value><c>true</c> if all versions should be scanned; otherwise, <c>false</c>.</value>
+        public bool AllVersions
+        {
+            get; set;
+        }
 
-		public string _allversions;
-		/// <summary>
-		/// Gets a value indicating whether all versions should be scanned.
-		/// </summary>
-		/// <value><c>true</c> if all versions should be scanned; otherwise, <c>false</c>.</value>
-		public bool AllVersions
-		{
-			get
-			{
-				if (string.IsNullOrEmpty(_allversions))
-				{
-					_allversions = getParameter("allversions");
-				}
-				return _allversions == "1";
-			}
-		}
-
-		private Database _db;
-		public Database Db
-		{
-			get
-			{
-				if (_db == null)
-				{
-					string databaseName = base.getParameter("db");
-					if (!string.IsNullOrEmpty(databaseName))
-					{
-						_db = Factory.GetDatabase(databaseName);
-					}
-					if (_db == null)
-					{
-						throw new DatabaseNotFoundException();
-					}
-				}
-				return _db;
-			}
-		}
+  
 		#endregion
 
 		/// <summary>
@@ -96,19 +47,19 @@ namespace ASR.Reports.Scanners
 		/// <returns></returns>
 		public override ICollection Scan()
 		{
-			List<ItemWorkflowEvent> results = new List<ItemWorkflowEvent>();
-
+			var results = new List<ItemWorkflowEvent>();
+		    var rootitem = GetRootItem();
 			Item[] items;
-			switch (Deep)
+			switch (ScanMode)
 			{
 				case Mode.Descendants:
-					items = Root.Axes.GetDescendants();
+					items = rootitem.Axes.GetDescendants();
 					break;
 				case Mode.Children:
-					items = Root.Axes.SelectItems("./*");
+                    items = rootitem.Axes.SelectItems("./*");
 					break;
 				default:
-					items = new Item[] { Root };
+					items = new Item[] { rootitem };
 					break;
 			}
 
