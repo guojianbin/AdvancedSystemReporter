@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Reflection;
+using Sitecore.Diagnostics;
+
 
 namespace ASR.Interface
 {
@@ -61,7 +64,17 @@ namespace ASR.Interface
             var parameters = Sitecore.StringUtil.GetNameValues(values, '=', '|');
             foreach(string param in parameters)
             {
-                Sitecore.Reflection.ReflectionUtil.SetProperty(this,param,parameters[param]);
+                var propertyinfo = this.GetType().GetProperty(param,
+                                                              BindingFlags.NonPublic | BindingFlags.Public |
+                                                              BindingFlags.Instance | BindingFlags.DeclaredOnly);
+                if(propertyinfo != null)
+                {
+                    Sitecore.Reflection.ReflectionUtil.SetProperty(this,propertyinfo,parameters[param]);
+                }
+                else
+                {
+                    Log.Warn(String.Format("ASR: cannot assign value to property {0} in type {1}",param,GetType()),this);
+                }
             }                       
         }
 
