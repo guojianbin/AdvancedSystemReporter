@@ -60,16 +60,18 @@ namespace ASR.Interface
 	    }
 
 	    private void assignProperties(string values)
-        {
-            var parameters = Sitecore.StringUtil.GetNameValues(values, '=', '|');
-            foreach(string param in parameters)
+	    {
+	        var splitValues = values.Split('|');            
+            foreach(string param in splitValues)
             {
-                var propertyinfo = this.GetType().GetProperty(param,
+                var key_values = param.Split(new char[] {'='}, 2);
+                
+                var propertyinfo = this.GetType().GetProperty(key_values[0],
                                                               BindingFlags.NonPublic | BindingFlags.Public |
-                                                              BindingFlags.Instance | BindingFlags.DeclaredOnly);
+                                                              BindingFlags.Instance);
                 if(propertyinfo != null)
                 {
-                    Sitecore.Reflection.ReflectionUtil.SetProperty(this,propertyinfo,parameters[param]);
+                    Sitecore.Reflection.ReflectionUtil.SetProperty(this,propertyinfo,key_values[1]);
                 }
                 else
                 {

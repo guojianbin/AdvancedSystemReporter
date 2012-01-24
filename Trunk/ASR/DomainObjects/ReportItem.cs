@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CorePoint.DomainObjects;
-using System.Collections;
-using System.Text.RegularExpressions;
 using Sitecore.Data;
-using Sitecore.Data.Fields;
 using System.Linq;
 using ASR.Interface;
 using Sitecore.Collections;

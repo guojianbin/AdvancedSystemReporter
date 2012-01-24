@@ -8,30 +8,30 @@ namespace ASR.Reports.Items
 {
 	/// <summary>
 	/// Scans a database according to a Sitecore Query. Accepts as parameters:
-	/// query: the sitcore query,
+	/// Query: the sitcore Query,
 	/// db: the database to use. By default "master".
-	/// root: the root item (an ID or a path). By default runs the query against the database object.
+	/// root: the root item (an ID or a path). By default runs the Query against the database object.
 	/// </summary>
 	public class QueryScanner : DatabaseScanner
 	{
 		
-		public static string QUERY_PARAMETER = "query";
-		
+		//public static string QUERY_PARAMETER = "Query";
 
+	    public string Query { get; set; }
 		
 
 		public override ICollection Scan()
 		{
-			string query = getParameter(QUERY_PARAMETER);
+			//string Query = getParameter(QUERY_PARAMETER);
 			
-			Sitecore.Diagnostics.Assert.IsNotNullOrEmpty(query, "Query can't be empty");
+			Sitecore.Diagnostics.Assert.IsNotNullOrEmpty(Query, "Query can't be empty");
 
 			Item[] results;
 
 
-			if (query.StartsWith("/") || query.StartsWith("fast:"))
+			if (Query.StartsWith("/") || Query.StartsWith("fast:"))
 			{
-				results = Database.SelectItems(query);
+				results = Database.SelectItems(Query);
 			}
 			else
 			{
@@ -40,7 +40,7 @@ namespace ASR.Reports.Items
 				{
 					throw new RootItemNotFoundException("Can't find root item " + Root);
 				}
-				results = rootItem.Axes.SelectItems(query);
+				results = rootItem.Axes.SelectItems(Query);
 			}
 		    return results ?? new Item[0];
 		}

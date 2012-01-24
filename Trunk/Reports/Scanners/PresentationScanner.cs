@@ -34,7 +34,7 @@ namespace ASR.Reports.Presentation
             
             ASR.Reports.Items.QueryScanner qs = new ASR.Reports.Items.QueryScanner();
             qs.AddParameters(
-                string.Format("query=/sitecore/content//*[contains(@__renderings,'{0}')]",Text));
+                string.Format("Query=/sitecore/content//*[contains(@__renderings,'{0}')]",Text));
 
 
             System.Collections.ArrayList list = new System.Collections.ArrayList(qs.Scan());

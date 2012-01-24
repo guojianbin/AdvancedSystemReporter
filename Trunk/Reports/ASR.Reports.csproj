@@ -167,6 +167,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y /s "$(TargetPath)" "d:\websites\asr\Website\bin\"</PostBuildEvent>
+    <PostBuildEvent>xcopy /y /s "$(TargetPath)" "$(SitecoreWebRoot)\bin\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -83,5 +83,21 @@ namespace ASR
 
         }
 
+        public static string MakeDateReplacements(string original)
+        {
+            var replacement = original;
+            replacement = replacement.Replace("$sc_nextyear", DateTime.Today.AddYears(1).ToString("yyyyMMddTHHmmss"));
+            replacement = replacement.Replace("$sc_nextweek", DateTime.Today.AddDays(7).ToString("yyyyMMddTHHmmss"));
+            replacement = replacement.Replace("$sc_nextmonth", DateTime.Today.AddMonths(1).ToString("yyyyMMddTHHmmss"));
+
+            replacement = replacement.Replace("$sc_lastyear", DateTime.Today.AddYears(-1).ToString("yyyyMMddTHHmmss"));
+            replacement = replacement.Replace("$sc_lastweek", DateTime.Today.AddDays(-7).ToString("yyyyMMddTHHmmss"));
+            replacement = replacement.Replace("$sc_lastmonth", DateTime.Today.AddMonths(-1).ToString("yyyyMMddTHHmmss"));
+            replacement = replacement.Replace("$sc_yesterday", DateTime.Today.AddDays(-1).ToString("yyyyMMddTHHmmss"));
+            replacement = replacement.Replace("$sc_today", DateTime.Today.ToString("yyyyMMddTHHmmss"));
+            replacement = replacement.Replace("$sc_now", DateTime.Now.ToString("yyyyMMddTHHmmss"));
+            return replacement;
+        }
+
     }
 }

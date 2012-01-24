@@ -42,8 +42,8 @@ namespace ASR.Controls
                 return value;
             }
             set
-            {
-                base.Value = value;
+            {                
+               base.Value = Util.MakeDateReplacements(value);
             }
         }
     }

@@ -1,11 +1,18 @@
 Advanced System Reporter
 ------------------------
 
+
+v.1.4.2
+
+- removed Email Reports - ASR item, which was not used
+
+- ItemViewer now displays dates according to the current culture and can be overriden with attribute DateFormat (using a standard .NET formatting string as the value).
+
 v.1.4.1
 
 - Fixed error in WorkflowStateScanner
 
-- Fix the default sorting options for viewers. You can add sort=[name of column],[ASC|DESC][DateTime] to viewers (thanks to Marko Tsoi for thi fix)
+- Fix the default sorting options for viewers. You can add sort=[name of column],[ASC|DESC][DateTime] to viewers (thanks to Marko Tsoi for this fix)
 
 v 1.4
 
@@ -21,7 +28,7 @@ v 1.4
 
 - New: Commands can have parameters. Simply add them in parenthesis after the command name, with the same format as a query string, and they will get assigned automatically to properties by reflection.
 
-- Fixed: the standard ItemViewer would not show data from fields with the same name as the keywords use to retrieve item properties (name, version, language, etc.). You can now prepend @ to indicate that it should retrieve a field. (e.g. @name will try to show a field called 'name', whereas name will display the name of the item).
+- Fixed: the standard ItemViewer would not show data from fields with the same name as the keywords used to retrieve item properties (name, version, language, etc.). You can now prepend @ to indicate that it should retrieve a field. (e.g. @name will try to show a field called 'name', whereas name will display the name of the item).
 
 - Fixed: $sc_currentuser replacement now works properly.
 

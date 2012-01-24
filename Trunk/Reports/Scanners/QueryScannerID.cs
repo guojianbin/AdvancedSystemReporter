@@ -11,7 +11,7 @@ namespace ASR.Reports.Scanners
     class QueryScannerID : BaseScanner
     {
         public static string DB_PARAMETER = "db";
-        public static string QUERY_PARAMETER = "query";
+        public static string QUERY_PARAMETER = "Query";
 
         public override System.Collections.ICollection Scan()
         {
@@ -23,7 +23,7 @@ namespace ASR.Reports.Scanners
 
             var query = getParameter(QUERY_PARAMETER);
 
-            Assert.ArgumentNotNullOrEmpty(query, "query can't be empty");
+            Assert.ArgumentNotNullOrEmpty(query, "Query can't be empty");
 
             return db.DataManager.DataSource.SelectIDs(query).ToArray();
         }

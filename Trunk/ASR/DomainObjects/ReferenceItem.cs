@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using CorePoint.DomainObjects;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -51,12 +52,7 @@ namespace ASR.DomainObjects
 
                 if (_replacedAttributes.Contains("$"))
                 {
-                    _replacedAttributes = _replacedAttributes.Replace("$sc_lastyear", DateTime.Today.AddYears(-1).ToString("yyyyMMddTHHmmss"));
-                    _replacedAttributes = _replacedAttributes.Replace("$sc_lastweek", DateTime.Today.AddDays(-7).ToString("yyyyMMddTHHmmss"));
-                    _replacedAttributes = _replacedAttributes.Replace("$sc_lastmonth", DateTime.Today.AddMonths(-1).ToString("yyyyMMddTHHmmss"));
-                    _replacedAttributes = _replacedAttributes.Replace("$sc_yesterday", DateTime.Today.AddDays(-1).ToString("yyyyMMddTHHmmss"));
-                    _replacedAttributes = _replacedAttributes.Replace("$sc_today", DateTime.Today.ToString("yyyyMMddTHHmmss"));
-                    _replacedAttributes = _replacedAttributes.Replace("$sc_now", DateTime.Now.ToString("yyyyMMddTHHmmss"));
+                    _replacedAttributes = Util.MakeDateReplacements(_replacedAttributes);
                     _replacedAttributes = _replacedAttributes.Replace("$sc_currentuser", _currentuser); 
                 }
 			    return _replacedAttributes;
@@ -83,7 +79,7 @@ namespace ASR.DomainObjects
 
 				if (pi != null)
 				{
-					pi.Value = value;
+					pi.Value = Uri.UnescapeDataString(value);
 				}
 			}
 			// can't find element
