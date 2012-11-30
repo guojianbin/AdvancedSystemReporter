@@ -37,12 +37,12 @@ namespace ASR.Commands
                 mailMessage = new MailMessage
                 {
                     From = new MailAddress(item["from"]),
-                    Subject = item["subject"],
+                    Subject = setDate(item["subject"]),
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                LogException("FROM email address error.");
+                LogException("FROM email address error." + item["from"]);
                 return;
             }
 
@@ -72,6 +72,7 @@ namespace ASR.Commands
                 {
                     try
                     {
+                        // test that each email address is valid. Continue to the next if it isn't.
                         MailAddress ccMailAddress = new MailAddress(ccAddress);
                         mailMessage.CC.Add(ccMailAddress);
                     }
@@ -93,6 +94,7 @@ namespace ASR.Commands
                 {
                     try
                     {
+                        // test that each email address is valid. Continue to the next if it isn't.
                         MailAddress bccMailAddress = new MailAddress(bccAddress);
                         mailMessage.Bcc.Add(bccMailAddress);
                     }
@@ -103,7 +105,7 @@ namespace ASR.Commands
                 }
             }
 
-            mailMessage.Body = Sitecore.Web.UI.WebControls.FieldRenderer.Render(item, "text");
+            mailMessage.Body = setDate(Sitecore.Web.UI.WebControls.FieldRenderer.Render(item, "text"));
             mailMessage.IsBodyHtml = true;
 
             foreach (var path in filePaths.Where(st => !string.IsNullOrEmpty(st)))
@@ -124,6 +126,19 @@ namespace ASR.Commands
         private void LogException(string message)
         {
             Sitecore.Diagnostics.Log.Error(string.Concat(LogPrefix, message), this);
+        }
+
+        /// <summary>
+        /// Replaces the variable $sc_pastmonth with the previous month from the
+        /// current month.
+        /// </summary>
+        /// <param name="input">the input string</param>
+        /// <returns>the result string with the previous month</returns>
+        private string setDate(string input)
+        {
+            var previousMonthDate = DateTime.Today.AddMonths(-1);
+            input = input.Replace("$sc_pastmonth", previousMonthDate.ToString(@"MMMMM"));
+            return input;
         }
         
         private string runReport(Item item, bool force)
