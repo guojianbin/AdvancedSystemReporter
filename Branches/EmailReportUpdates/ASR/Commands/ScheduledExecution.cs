@@ -46,7 +46,7 @@ namespace ASR.Commands
                 return;
             }
 
-            var senders = item["to"].Split(',');
+            var senders = item["to"].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var sender in senders)
             {
                 // test that each email address is valid. Continue to the next if it isn't.
@@ -58,6 +58,48 @@ namespace ASR.Commands
                 catch (Exception)
                 {
                     LogException("TO email address error. " + sender);
+                }
+            }
+
+            string[] ccAddressList = item["cc"].Split(new[]
+			{
+				','
+			}, StringSplitOptions.RemoveEmptyEntries);
+
+            if (ccAddressList.Any())
+            {
+                foreach (var ccAddress in ccAddressList)
+                {
+                    try
+                    {
+                        MailAddress ccMailAddress = new MailAddress(ccAddress);
+                        mailMessage.CC.Add(ccMailAddress);
+                    }
+                    catch (Exception)
+                    {
+                        LogException("CC email address error. " + ccAddress);
+                    }
+                }
+            }
+
+            string[] bccAddressList = item["bcc"].Split(new[]
+			{
+				','
+			}, StringSplitOptions.RemoveEmptyEntries);
+
+            if (bccAddressList.Any())
+            {
+                foreach (var bccAddress in bccAddressList)
+                {
+                    try
+                    {
+                        MailAddress bccMailAddress = new MailAddress(bccAddress);
+                        mailMessage.Bcc.Add(bccMailAddress);
+                    }
+                    catch (Exception)
+                    {
+                        LogException("BCC email address error. " + bccAddress);
+                    }
                 }
             }
 
