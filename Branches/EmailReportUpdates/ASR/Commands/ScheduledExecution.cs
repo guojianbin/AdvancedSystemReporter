@@ -27,8 +27,10 @@ namespace ASR.Commands
             MultilistField mf = item.Fields["reports"];
             if (mf == null) return;
             var force = item["sendempty"] == "1";
-            var filePaths = mf.GetItems().Select(i => runReport(i, force));
 
+            var isHtmlExportType = item["Export Type"].ToLower() == "html";
+
+            var filePaths = mf.GetItems().Select(i => runReport(i, force, isHtmlExportType));
 
             MailMessage mailMessage;
 
@@ -140,8 +142,10 @@ namespace ASR.Commands
             input = input.Replace("$sc_pastmonth", previousMonthDate.ToString(@"MMMMM"));
             return input;
         }
+
+
         
-        private string runReport(Item item, bool force)
+        private string runReport(Item item, bool force, bool isHtmlExportType)
         {
             Assert.IsNotNull(item, "item");            
             var reportItem = ReportItem.CreateFromParameters(item["parameters"]);
@@ -149,9 +153,17 @@ namespace ASR.Commands
             var report = reportItem.TransformToReport(null);
             report.Run(null);
             Log(string.Concat("Run",reportItem.Name));
-            return report.ResultsCount() != 0 || force
+
+            if (isHtmlExportType)
+            {
+                return report.ResultsCount() != 0 || force
                     ? new Export.HtmlExport(report, reportItem).SaveFile(prefix, "html")
                     : null;
+            }
+
+            return report.ResultsCount() != 0 || force
+                    ? new Export.CsvExport(report).Save(prefix, "csv")
+                    : null;            
         }   
     }
 }
